@@ -3,7 +3,9 @@
 Sequência para colar no `@Danrcbh_bot`, uma mensagem por vez. Cada bloco cabe no limite
 de 4096 caracteres do Telegram e é auto-contido.
 
-**Ordem importa.** A 3 depende do resultado da 2 — não adiante.
+**Ordem importa.** Cada mensagem depende da resposta da anterior — não adiante.
+
+Estado: 1 e 2 já rodaram. Próximas a enviar: **2b** e **3**.
 
 Os scripts não têm nenhuma dependência externa: só builtins do Node (18+, ideal 20+).
 Não há `npm install` em lugar nenhum desta sequência.
@@ -77,10 +79,90 @@ já estão marcados como manual por isso.
 
 ---
 
-## 3 · Escrever o coletor
+## 2b · Re-verificar com as candidatas novas
 
-> **Só depois da 2.** O que este prompt deve pedir depende de quais fontes têm feed real.
-> O texto abaixo é a versão genérica; ajuste a lista de fontes conforme o probe retornar.
+> Rodar depois que a 2 responder. Corrige o falso positivo do Bring a Trailer.
+
+```
+Puxe as últimas alterações da branch claude/porsche-993-digest-improvements-g9rk35 —
+corrigi dois defeitos no probe que a sua primeira rodada expôs.
+
+O que mudou: feed que responde XML mas com ZERO itens não conta mais como fonte
+utilizável (era o caso do Bring a Trailer, que eu tinha marcado como rss por engano), e
+agora cada fonte pode ter várias URLs candidatas, testadas em ordem. Bring a Trailer e
+Porsche Newsroom ganharam quatro candidatas cada.
+
+Dentro de porsche-digest/:
+
+  git pull origin claude/porsche-993-digest-improvements-g9rk35
+  node tools/probe-sources.mjs
+
+Me responda com a tabela e as linhas de resumo. Quero saber especificamente:
+1. Alguma das 4 candidatas do bring_a_trailer devolveu feed COM itens?
+2. E alguma das 4 do porsche_newsroom?
+
+Se alguma pegar, rode com --write, depois node tools/build.mjs, e faça commit e push
+na mesma branch.
+
+Uma correção de contagem, para não seguirmos com número errado: são 7 fontes com HTTP 403
+(classic_com, hemmings, collecting_cars, canepa, suncoast, fcp_euro, pelican_parts), 3
+manuais (mobile_de, autoscout24, porsche_classic_partners) e 3 automatizáveis de verdade
+(elferspot, classic_driver, exchange_rate) — não 4.
+
+Investigação separada: abra no navegador cada uma das 7 que deram 403 e procure se existe
+feed RSS ou API oficial documentada — link no rodapé, /developers, /api, ou uma tag
+<link type="application/rss+xml"> no HTML da página.
+
+NÃO troque o User-Agent para contornar o 403. É controle de acesso deliberado do site.
+Sem rota oficial, a fonte fica como manual mesmo.
+```
+
+---
+
+## 3 · Descobrir o que os feeds contêm, e coletar o que já dá
+
+```
+Antes de escrever o coletor de mercado, preciso saber o que os feeds que funcionam
+realmente trazem.
+
+Hoje só 3 fontes são automatizáveis: elferspot e classic_driver (RSS, 10 itens cada) e
+exchange_rate (JSON). O bring_a_trailer não conta — o feed dele veio com zero itens.
+
+PASSO 1 — Baixe os feeds do elferspot e do classic_driver e me mostre, de cada um, os 3
+primeiros itens com: título, link, data e as categorias/tags, se houver.
+
+PASSO 2 — Me diga, para cada feed, qual dos dois ele é:
+  (a) ANÚNCIOS de carro à venda, com preço
+  (b) MATÉRIAS editoriais / artigos de revista
+
+Isso decide o rumo do projeto. Se os dois forem (b), a seção "Em pauta" pode ser
+automatizada agora, mas "O Mercado" fica sem nenhuma fonte automatizável — e aí a
+conversa é outra: ou parser de HTML, ou curadoria manual pelo Telegram.
+
+PASSO 3 — Implemente só o que já é possível hoje, seguindo CONTRATO_DIGEST_JSON.md:
+  - newsroom.articles a partir dos feeds que forem editoriais
+  - meta.exchange_rate com a cotação USD/BRL real, stale:false
+
+NÃO mexa em market.live nem em market.sold ainda, e mantenha meta.seed:true enquanto o
+mercado continuar sendo dado de exemplo. O aviso amarelo no topo do digest existe
+exatamente para esse estado intermediário — não o desligue.
+
+Valide antes de considerar pronto:
+
+  node tools/build.mjs
+  node tools/score-listing.mjs --test
+
+Me responda com as respostas dos passos 1 e 2, e o diff do que mudou no digest.json.
+```
+
+---
+
+## 4 · Escrever o coletor de mercado
+
+> **Depende da resposta do passo 2 acima.** Se os feeds forem editoriais, este prompt
+> precisa ser reescrito para scraping ou curadoria — não use como está.
+
+### Rascunho, a reescrever quando o passo 2 da mensagem 3 responder
 
 ```
 Escreva o coletor diário do Porsche Digest. Ele deve produzir o arquivo
@@ -115,7 +197,7 @@ Se o build reprovar, corrija o coletor. Não publique nada com o build vermelho.
 
 ---
 
-## 4 · Publicar no Cloudflare Pages
+## 5 · Publicar no Cloudflare Pages
 
 ```
 Publique o digest no Cloudflare Pages como projeto separado — ele não deve tocar o Worker
@@ -137,7 +219,7 @@ inventado.
 
 ---
 
-## 5 · Os comandos de Telegram
+## 6 · Os comandos de Telegram
 
 ```
 Implemente os handlers de comando do Porsche Digest conforme o contrato em
