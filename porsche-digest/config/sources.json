@@ -81,13 +81,31 @@
         "candidate_url": "https://newsroom.porsche.com/en.rss",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:46:50.605Z",
+        "probed_at": "2026-08-16T23:57:12.520Z",
         "probe_url": "https://newsroom.porsche.com/en.rss",
         "candidate_urls": [
           "https://newsroom.porsche.com/en.rss",
           "https://newsroom.porsche.com/en/feed.xml",
           "https://newsroom.porsche.com/feed",
           "https://newsroom.porsche.com/rss"
+        ],
+        "probe_attempts": [
+          {
+            "url": "https://newsroom.porsche.com/en.rss",
+            "status": 200
+          },
+          {
+            "url": "https://newsroom.porsche.com/en/feed.xml",
+            "status": 404
+          },
+          {
+            "url": "https://newsroom.porsche.com/feed",
+            "status": 404
+          },
+          {
+            "url": "https://newsroom.porsche.com/rss",
+            "status": 404
+          }
         ]
       }
     },
@@ -122,14 +140,36 @@
         "method": "rss",
         "candidate_url": "https://bringatrailer.com/porsche/993/feed/",
         "verified": true,
-        "reason": "feed com 0 itens, menciona 993",
-        "probed_at": "2026-08-16T23:46:52.176Z",
-        "probe_url": "https://bringatrailer.com/porsche/993/feed/",
+        "reason": "feed com 20 itens, SEM mencao a 993 — checar se cobre o modelo",
+        "probed_at": "2026-08-16T23:57:19.797Z",
+        "probe_url": "https://bringatrailer.com/feed/",
         "candidate_urls": [
           "https://bringatrailer.com/porsche/993/feed/",
           "https://bringatrailer.com/porsche/993-carrera-4s/feed/",
           "https://bringatrailer.com/porsche/feed/",
           "https://bringatrailer.com/feed/"
+        ],
+        "probe_attempts": [
+          {
+            "url": "https://bringatrailer.com/porsche/993/feed/",
+            "status": 200,
+            "items": 0
+          },
+          {
+            "url": "https://bringatrailer.com/porsche/993-carrera-4s/feed/",
+            "status": 200,
+            "items": 0
+          },
+          {
+            "url": "https://bringatrailer.com/porsche/feed/",
+            "status": 200,
+            "items": 0
+          },
+          {
+            "url": "https://bringatrailer.com/feed/",
+            "status": 200,
+            "items": 20
+          }
         ]
       },
       "capture_comments": true,
@@ -150,8 +190,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:46:55.025Z",
-        "probe_url": "https://www.pcarmarket.com"
+        "probed_at": "2026-08-16T23:57:22.800Z",
+        "probe_url": "https://www.pcarmarket.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.pcarmarket.com",
+            "status": 200
+          }
+        ]
       }
     },
     {
@@ -167,8 +213,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:46:57.198Z",
-        "probe_url": "https://mart.pca.org"
+        "probed_at": "2026-08-16T23:57:24.978Z",
+        "probe_url": "https://mart.pca.org",
+        "probe_attempts": [
+          {
+            "url": "https://mart.pca.org",
+            "status": 200
+          }
+        ]
       }
     },
     {
@@ -186,10 +238,16 @@
       "ingest": {
         "method": "unknown",
         "verified": true,
-        "reason": "candidate_url falhou (HTTP 403) — precisa de outra rota de ingestão",
-        "probed_at": "2026-08-16T23:46:58.771Z",
+        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "probed_at": "2026-08-16T23:57:26.553Z",
         "probe_url": "https://www.classic.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria)."
+        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
+        "probe_attempts": [
+          {
+            "url": "https://www.classic.com",
+            "status": 403
+          }
+        ]
       },
       "notes": "Melhor fonte de INDICE/valuation historico. Como listagem, gera duplicata — ver dedup.aggregators."
     },
@@ -207,10 +265,16 @@
         "method": "unknown",
         "candidate_url": "https://www.hemmings.com/blog/feed/",
         "verified": true,
-        "reason": "candidate_url falhou (HTTP 403) — precisa de outra rota de ingestão",
-        "probed_at": "2026-08-16T23:47:00.963Z",
+        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "probed_at": "2026-08-16T23:57:28.211Z",
         "probe_url": "https://www.hemmings.com/blog/feed/",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria)."
+        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
+        "probe_attempts": [
+          {
+            "url": "https://www.hemmings.com/blog/feed/",
+            "status": 403
+          }
+        ]
       }
     },
     {
@@ -227,10 +291,16 @@
       "ingest": {
         "method": "unknown",
         "verified": true,
-        "reason": "candidate_url falhou (HTTP 403) — precisa de outra rota de ingestão",
-        "probed_at": "2026-08-16T23:47:03.183Z",
+        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "probed_at": "2026-08-16T23:57:29.790Z",
         "probe_url": "https://collectingcars.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria)."
+        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
+        "probe_attempts": [
+          {
+            "url": "https://collectingcars.com",
+            "status": 403
+          }
+        ]
       },
       "notes": "Briefing listava 'Collecting Cars USA' e 'Collecting Cars' como fontes separadas — e o mesmo dominio. Unificado aqui com cobertura global."
     },
@@ -247,8 +317,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:47:05.501Z",
-        "probe_url": "https://www.sloanmotorcars.com"
+        "probed_at": "2026-08-16T23:57:32.349Z",
+        "probe_url": "https://www.sloanmotorcars.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.sloanmotorcars.com",
+            "status": 200
+          }
+        ]
       }
     },
     {
@@ -263,10 +339,16 @@
       "ingest": {
         "method": "unknown",
         "verified": true,
-        "reason": "candidate_url falhou (HTTP 403) — precisa de outra rota de ingestão",
-        "probed_at": "2026-08-16T23:47:07.084Z",
+        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "probed_at": "2026-08-16T23:57:33.931Z",
         "probe_url": "https://www.canepa.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria)."
+        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
+        "probe_attempts": [
+          {
+            "url": "https://www.canepa.com",
+            "status": 403
+          }
+        ]
       },
       "notes": "Estoque pequeno e caro — alta relevancia para a lente Colecionador."
     },
@@ -283,8 +365,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:47:09.274Z",
-        "probe_url": "https://www.europeancollectibles.com"
+        "probed_at": "2026-08-16T23:57:36.239Z",
+        "probe_url": "https://www.europeancollectibles.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.europeancollectibles.com",
+            "status": 200
+          }
+        ]
       }
     },
     {
@@ -302,8 +390,15 @@
         "candidate_url": "https://www.elferspot.com/en/feed/",
         "verified": true,
         "reason": "feed com 10 itens, menciona 993",
-        "probed_at": "2026-08-16T23:47:12.745Z",
-        "probe_url": "https://www.elferspot.com/en/feed/"
+        "probed_at": "2026-08-16T23:57:39.629Z",
+        "probe_url": "https://www.elferspot.com/en/feed/",
+        "probe_attempts": [
+          {
+            "url": "https://www.elferspot.com/en/feed/",
+            "status": 200,
+            "items": 10
+          }
+        ]
       },
       "notes": "Especialista 911. Melhor cobertura europeia para 993."
     },
@@ -352,8 +447,15 @@
         "candidate_url": "https://www.classicdriver.com/en/rss.xml",
         "verified": true,
         "reason": "feed com 10 itens, menciona 993",
-        "probed_at": "2026-08-16T23:47:15.171Z",
-        "probe_url": "https://www.classicdriver.com/en/rss.xml"
+        "probed_at": "2026-08-16T23:57:41.619Z",
+        "probe_url": "https://www.classicdriver.com/en/rss.xml",
+        "probe_attempts": [
+          {
+            "url": "https://www.classicdriver.com/en/rss.xml",
+            "status": 200,
+            "items": 10
+          }
+        ]
       },
       "notes": "Tambem e fonte editorial forte para a secao de referencias de design."
     },
@@ -370,8 +472,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:47:17.454Z",
-        "probe_url": "https://early911s.de"
+        "probed_at": "2026-08-16T23:57:43.859Z",
+        "probe_url": "https://early911s.de",
+        "probe_attempts": [
+          {
+            "url": "https://early911s.de",
+            "status": 200
+          }
+        ]
       }
     },
     {
@@ -387,8 +495,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:47:21.305Z",
-        "probe_url": "https://schaltkulisse.com"
+        "probed_at": "2026-08-16T23:57:47.012Z",
+        "probe_url": "https://schaltkulisse.com",
+        "probe_attempts": [
+          {
+            "url": "https://schaltkulisse.com",
+            "status": 200
+          }
+        ]
       },
       "notes": "Curadoria forte — relevante para a lente Construtor."
     },
@@ -406,8 +520,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:47:24.778Z",
-        "probe_url": "https://www.paul-stephens.com"
+        "probed_at": "2026-08-16T23:57:50.498Z",
+        "probe_url": "https://www.paul-stephens.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.paul-stephens.com",
+            "status": 200
+          }
+        ]
       },
       "notes": "Autoart = builds proprios. Relevante para Construtor e Piloto."
     },
@@ -425,8 +545,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:47:27.558Z",
-        "probe_url": "https://autofarm.co.uk"
+        "probed_at": "2026-08-16T23:57:53.411Z",
+        "probe_url": "https://autofarm.co.uk",
+        "probe_attempts": [
+          {
+            "url": "https://autofarm.co.uk",
+            "status": 200
+          }
+        ]
       },
       "notes": "Especialista tecnico — fonte de conteudo de manutencao, nao so de estoque."
     },
@@ -443,8 +569,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:47:30.187Z",
-        "probe_url": "https://www.export56.com"
+        "probed_at": "2026-08-16T23:57:56.031Z",
+        "probe_url": "https://www.export56.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.export56.com",
+            "status": 200
+          }
+        ]
       }
     },
     {
@@ -460,8 +592,14 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-16T23:47:32.749Z",
-        "probe_url": "https://www.hexagonclassics.com"
+        "probed_at": "2026-08-16T23:57:58.509Z",
+        "probe_url": "https://www.hexagonclassics.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.hexagonclassics.com",
+            "status": 200
+          }
+        ]
       }
     },
     {
@@ -476,10 +614,16 @@
       "ingest": {
         "method": "unknown",
         "verified": true,
-        "reason": "candidate_url falhou (HTTP 403) — precisa de outra rota de ingestão",
-        "probed_at": "2026-08-16T23:47:34.344Z",
+        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "probed_at": "2026-08-16T23:58:00.098Z",
         "probe_url": "https://www.suncoastparts.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria)."
+        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
+        "probe_attempts": [
+          {
+            "url": "https://www.suncoastparts.com",
+            "status": 403
+          }
+        ]
       }
     },
     {
@@ -494,10 +638,16 @@
       "ingest": {
         "method": "unknown",
         "verified": true,
-        "reason": "candidate_url falhou (HTTP 403) — precisa de outra rota de ingestão",
-        "probed_at": "2026-08-16T23:47:35.927Z",
+        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "probed_at": "2026-08-16T23:58:01.678Z",
         "probe_url": "https://www.fcpeuro.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria)."
+        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
+        "probe_attempts": [
+          {
+            "url": "https://www.fcpeuro.com",
+            "status": 403
+          }
+        ]
       },
       "notes": "Garantia vitalicia em consumiveis — argumento forte para a lente Piloto."
     },
@@ -514,10 +664,16 @@
       "ingest": {
         "method": "unknown",
         "verified": true,
-        "reason": "candidate_url falhou (HTTP 403) — precisa de outra rota de ingestão",
-        "probed_at": "2026-08-16T23:47:37.499Z",
+        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "probed_at": "2026-08-16T23:58:03.240Z",
         "probe_url": "https://www.pelicanparts.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria)."
+        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
+        "probe_attempts": [
+          {
+            "url": "https://www.pelicanparts.com",
+            "status": 403
+          }
+        ]
       },
       "notes": "Adicionado: os DIY articles sao a melhor base publica de manutencao 993."
     },
@@ -534,13 +690,19 @@
         "method": "json_api",
         "verified": true,
         "reason": "respondeu JSON",
-        "probed_at": "2026-08-16T23:47:39.203Z",
-        "probe_url": "https://open.er-api.com/v6/latest/USD"
+        "probed_at": "2026-08-16T23:58:04.856Z",
+        "probe_url": "https://open.er-api.com/v6/latest/USD",
+        "probe_attempts": [
+          {
+            "url": "https://open.er-api.com/v6/latest/USD",
+            "status": 200
+          }
+        ]
       },
       "fallback_rate": 5.11,
       "notes": "Se a chamada falhar, usar fallback e MARCAR no rodape que a cotacao esta defasada, com a data da ultima cotacao boa."
     }
   ],
-  "probed_at": "2026-08-16T23:47:40.705Z",
+  "probed_at": "2026-08-16T23:58:06.370Z",
   "candidate_note": "Um feed que responde XML mas traz ZERO itens NAO conta como fonte utilizavel: quase sempre significa caminho errado. Por isso as fontes cujo feed veio vazio ganharam candidatas alternativas."
 }
