@@ -13,12 +13,12 @@ Validação: `node tools/build.mjs` — reprova antes do deploy.
 ```jsonc
 {
   "meta":      { /* obrigatório */ },
+  "lead":      { /* a abertura editorial — ver abaixo */ },
   "newsroom":  { "articles": [] },
   "market":    { "live": [], "sold": [] },
   "valuation": { "points": [], "models": [] },
   "parts":     { "suppliers": [] },
-  "videos":    { "mode": "search" | "curated", "curated": {} },
-  "legacy":    { "items": [] }
+  "videos":    { "mode": "search" | "curated", "curated": {} }
 }
 ```
 
@@ -31,7 +31,7 @@ campo com valor **errado**, e é isso que a validação persegue.
 
 | Campo | Tipo | Nota |
 |---|---|---|
-| `schema_version` | string | `"5.0"` |
+| `schema_version` | string | `"6.0"` |
 | `generated_at` | ISO 8601 | com offset; alimenta o cabeçalho e o rodapé |
 | `generator` | string | quem gerou, para rastrear |
 | `seed` | boolean | `true` → faixa amarela de "dados de exemplo". **Produção: `false`.** |
@@ -43,6 +43,25 @@ campo com valor **errado**, e é isso que a validação persegue.
 
 `seed: true` é a chave de honestidade do digest. Enquanto ela estiver ligada, nenhum
 número da página deve ser lido como real — e a página diz isso.
+
+---
+
+## `lead` — a abertura editorial
+
+O que separa jornal de feed. Um argumento por edição, escrito pelo Hermes.
+
+| Campo | Tipo | Nota |
+|---|---|---|
+| `kicker` | string | rótulo curto acima do título |
+| `headline` | string | a tese, não um resumo |
+| `standfirst` | string | uma frase que sustenta a tese |
+| `body` | string[] | 2–4 parágrafos; o primeiro recebe capitular |
+
+Sem `lead`, o digest **compõe um** a partir dos próprios dados — melhor aderência da
+edição e movimento do índice — e o declara como derivado. Funciona, mas é o modo
+degradado: a abertura derivada não defende nada.
+
+O teste de uma boa abertura: trocá-la com a de outra edição deveria ser perceptível.
 
 ---
 
@@ -67,6 +86,7 @@ lentes. Sinal ausente não invalida o anúncio: o critério é removido e a `con
 | `price_usd` | number | ✔ — sempre em USD; o BRL é derivado |
 | `ends_at` | ISO 8601 | leilões |
 | `also_listed_on` | string[] | ids das fontes agregadoras que também listam |
+| `editorial_note` | string | uma frase de leitura humana — ver abaixo |
 
 ### Sinais das lentes
 
@@ -114,6 +134,19 @@ que é o pior resultado possível para um digest cuja função é ajudar a decid
 `mechanical_freshness: "unknown"` existe para o caso em que o anúncio afirma não saber:
 é diferente de não haver informação nenhuma.
 
+### `editorial_note` — a frase de julgamento
+
+Uma frase que diz **o que a nota não diz**: procedência, contexto, o que o anúncio omite,
+por que o preço é o que é. Não repita o score — ele já está na página.
+
+Sem ela, o digest gera uma explicação derivada do próprio score (lente dominante,
+penalidades aplicadas, campos ausentes) e a renderiza em itálico esmaecido. A distinção
+tipográfica é intencional: máquina explicando máquina não deve parecer alguém que leu o
+carro.
+
+Escreva `editorial_note` para os anúncios que merecem leitura — não para todos. Nota
+editorial em todo item vira ruído, e o modo derivado já cobre o resto com honestidade.
+
 ---
 
 ## `market.sold[]`
@@ -137,7 +170,8 @@ Enquanto for exemplo, `seed: true` e `note` dizendo isso.
 `mode: "curated"` exige `curated: { piloto: [], colecionador: [], construtor: [] }`,
 cada item com `{ title, url, duration?, views? }`.
 
-**`legacy.items[]`** — `{ id, label, value_993, value_current }`; `null` vira "a preencher".
+> A chave `legacy` (seção "911 Turbo S 2026") **saiu na v6**. Se o coletor ainda a
+> produzir, o build avisa e o digest a ignora.
 
 ---
 
@@ -146,6 +180,7 @@ cada item com `{ title, url, duration?, views? }`.
 ```
 □ meta.seed = false
 □ meta.generated_at do dia, com offset
+□ lead escrito para a edição (ou aceito o modo derivado, conscientemente)
 □ exchange_rate.rate real; stale = false
 □ 5 live + 5 sold após dedup
 □ todo source_id existe em config/sources.json

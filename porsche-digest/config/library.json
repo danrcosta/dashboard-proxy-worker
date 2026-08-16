@@ -1,0 +1,162 @@
+{
+  "$schema_version": "6.0",
+  "description": "A Biblioteca — as publicações que servem de referência editorial e visual para o digest. Registrar aqui evita que o benchmark se perca: cada evolução futura pode ser checada contra o que estas publicações fazem.",
+
+  "principle": "Não copiar nenhuma individualmente. A combinação é que produz algo que nenhuma delas é: inteligência de mercado com voz editorial. 000 e Type 7 dão a forma; Hagerty e Classic Driver dão a função; Petrolicious e Curves dão o tom; Stuttcars e Porsche ORIGINALE dão o lastro.",
+
+  "references": [
+    {
+      "id": "000_magazine",
+      "name": "000 Magazine",
+      "url": "https://000magazine.com",
+      "focus": "Porsche, exclusivamente",
+      "role": "benchmark_geral",
+      "borrow": "Profundidade editorial e tratamento de arquivo. O carro como objeto cultural, não como produto — a moldura de 'estudo' em vez de 'catálogo'.",
+      "applied_in": ["arquivo", "abertura"],
+      "content": 5, "visual": 5
+    },
+    {
+      "id": "type7",
+      "name": "Type 7",
+      "url": "https://type7.com",
+      "focus": "Porsche, design e cultura contemporânea",
+      "role": "referencia_visual_principal",
+      "borrow": "Direção de arte digital: whitespace generoso, grid assimétrico, tipografia com hierarquia forte, carro inserido em contexto em vez de ficha técnica isolada.",
+      "applied_in": ["layout", "tipografia", "abertura"],
+      "content": 4.5, "visual": 5
+    },
+    {
+      "id": "luftgekuhlt",
+      "name": "Luftgekühlt",
+      "url": "https://luftgekuhlt.com",
+      "focus": "Porsche air-cooled como projeto cultural",
+      "role": "identidade_air_cooled",
+      "borrow": "Curadoria: mostrar poucos carros, muito bem escolhidos, em contexto arquitetônico. A disciplina de editar para menos.",
+      "applied_in": ["mercado", "arquivo"],
+      "content": 4, "visual": 5
+    },
+    {
+      "id": "petrolicious",
+      "name": "Petrolicious",
+      "url": "https://petrolicious.com",
+      "focus": "Carros vintage e as pessoas por trás deles",
+      "role": "storytelling",
+      "borrow": "A história do carro é a história do dono. Fotografia cinematográfica, ambiente natural, nada de aspecto de classificado.",
+      "applied_in": ["arquivo", "estrada"],
+      "content": 5, "visual": 5
+    },
+    {
+      "id": "curves",
+      "name": "Curves Magazin",
+      "url": "https://curves-magazin.com",
+      "focus": "Porsche, estradas e viagem",
+      "role": "fotografia_lifestyle",
+      "borrow": "Minimalismo europeu: paisagem, estrada, pouca informação por página, muito respiro. O oposto de densidade.",
+      "applied_in": ["estrada", "layout"],
+      "content": 4, "visual": 5
+    },
+    {
+      "id": "road_rat",
+      "name": "The Road Rat",
+      "url": "https://theroadrat.com",
+      "focus": "Cultura automobilística",
+      "role": "editorial_sofisticado",
+      "borrow": "Texto longo com confiança. Nada de resumo de três linhas quando o assunto pede três parágrafos.",
+      "applied_in": ["arquivo"],
+      "content": 5, "visual": 5
+    },
+    {
+      "id": "magneto",
+      "name": "Magneto",
+      "url": "https://magnetomagazine.com",
+      "focus": "Carros clássicos e de coleção",
+      "role": "colecionismo",
+      "borrow": "Cobertura de colecionismo, concours e eventos com rigor histórico.",
+      "applied_in": ["arquivo", "indice"],
+      "content": 5, "visual": 4.5
+    },
+    {
+      "id": "octane",
+      "name": "Octane",
+      "url": "https://octane-magazine.com",
+      "focus": "Clássicos e performance",
+      "role": "tecnico_longo",
+      "borrow": "Artigos técnicos extensos e impressões de condução — a autoridade que vem de escrever muito sobre pouco.",
+      "applied_in": ["arquivo", "oficina"],
+      "content": 5, "visual": 4
+    },
+    {
+      "id": "classic_driver",
+      "name": "Classic Driver",
+      "url": "https://www.classicdriver.com",
+      "focus": "Collector cars e lifestyle, com marketplace",
+      "role": "marketplace_aspiracional",
+      "borrow": "Como apresentar um carro à venda como objeto de design, e não como anúncio. É a ponte entre editorial e mercado.",
+      "applied_in": ["mercado"],
+      "content": 4.5, "visual": 4.5
+    },
+    {
+      "id": "hagerty",
+      "name": "Hagerty Media",
+      "url": "https://www.hagerty.com/media",
+      "focus": "Clássicos, valuation e mercado",
+      "role": "inteligencia_de_mercado",
+      "borrow": "Análise de variante, tendência e decisão de compra. Visualmente menos sofisticada, funcionalmente a mais útil da lista.",
+      "applied_in": ["indice", "mercado", "lentes"],
+      "content": 5, "visual": 4
+    },
+    {
+      "id": "stuttcars",
+      "name": "Stuttcars",
+      "url": "https://www.stuttcars.com",
+      "focus": "Porsche — base de conhecimento",
+      "role": "lastro_tecnico",
+      "borrow": "Fichas, gerações, variantes e motores. Banco de dados, não publicação — e é assim que deve ser usado.",
+      "applied_in": ["arquivo", "carro"],
+      "content": 5, "visual": 3.5
+    },
+    {
+      "id": "flatsixes",
+      "name": "FlatSixes",
+      "url": "https://flatsixes.com",
+      "focus": "Porsche — notícias e cultura",
+      "role": "cobertura_ampla",
+      "borrow": "Acervo grande sobre manutenção, modelos, tuning e eventos.",
+      "applied_in": ["oficina", "estrada"],
+      "content": 4.5, "visual": 3.5
+    },
+    {
+      "id": "9werks",
+      "name": "9WERKS",
+      "url": "https://9werks.co.uk",
+      "focus": "Porsche clássicos, com foco em uso",
+      "role": "ownership",
+      "borrow": "A perspectiva de quem usa o carro: melhorias, rodagem, manutenção. Alimenta diretamente a lente do Piloto.",
+      "applied_in": ["oficina", "lentes"],
+      "content": 4.5, "visual": 4
+    },
+    {
+      "id": "porsche_originale",
+      "name": "Porsche ORIGINALE / Porsche Classic",
+      "url": "https://www.porsche.com/international/accessoriesandservice/classic/",
+      "focus": "Porsche Classic — fonte oficial",
+      "role": "fonte_primaria",
+      "borrow": "Autenticidade, restauração, peças originais e história oficial. É a fonte primária para conferir o que as outras afirmam.",
+      "applied_in": ["arquivo", "carro", "oficina"],
+      "content": 5, "visual": 5
+    }
+  ],
+
+  "design_translation": {
+    "note": "O que o benchmark vira, concretamente, em decisão de layout. Detalhamento em EDITORIAL.md.",
+    "rules": [
+      "Um argumento por edição. A abertura diz o que importa hoje; o resto se subordina.",
+      "Hierarquia radical: a matéria de capa ocupa espaço desproporcional. Acervo vive no rodapé.",
+      "Serifada para voz editorial, sem serifa para dado. A distinção tipográfica separa opinião de medição.",
+      "Whitespace é conteúdo. Densidade é o inimigo declarado.",
+      "Cor com parcimônia: papel e tinta como base, ouro só como acento.",
+      "Medida de leitura curta (≈68 caracteres) na prosa, mesmo em tela larga.",
+      "Sem badge colorida onde um ponto e uma palavra bastam."
+    ]
+  }
+}

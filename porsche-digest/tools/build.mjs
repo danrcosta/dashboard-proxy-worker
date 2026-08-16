@@ -33,6 +33,8 @@ const readJson = async (rel) => {
 const personas = await readJson('config/personas.json');
 const profile = await readJson('config/profile.json');
 const sources = await readJson('config/sources.json');
+const dossiers = await readJson('config/dossiers.json');
+const library = await readJson('config/library.json');
 const digest = await readJson('public/data/digest.json');
 
 /* --------------------------------------------------------------- validação */
@@ -85,6 +87,43 @@ if (sources) {
   }
 }
 
+if (dossiers) {
+  const ids = dossiers.chapters.map((c) => c.id);
+  if (new Set(ids).size !== ids.length) errors.push('dossiers.json: ids de capítulo duplicados');
+  if (!dossiers.chapters.length) errors.push('dossiers.json: nenhum capítulo — a seção Arquivo ficaria vazia');
+
+  for (const chapter of dossiers.chapters) {
+    for (const field of ['kicker', 'title', 'standfirst']) {
+      if (!chapter[field]) errors.push(`dossiers.json: capítulo "${chapter.id}" sem ${field}`);
+    }
+    if (!chapter.body?.length) errors.push(`dossiers.json: capítulo "${chapter.id}" sem corpo de texto`);
+  }
+}
+
+if (dossiers && library) {
+  const known = new Set(library.references.map((r) => r.id));
+  for (const chapter of dossiers.chapters) {
+    for (const ref of chapter.further_reading ?? []) {
+      if (!known.has(ref)) {
+        warnings.push(`dossiers.json: capítulo "${chapter.id}" cita referência "${ref}" ausente de library.json — o link não será exibido`);
+      }
+    }
+  }
+}
+
+if (dossiers && personas) {
+  const ids = personas.personas.map((p) => p.id);
+  for (const chapter of dossiers.chapters) {
+    for (const persona of chapter.personas ?? []) {
+      if (!ids.includes(persona)) errors.push(`dossiers.json: capítulo "${chapter.id}" cita persona inexistente "${persona}"`);
+    }
+  }
+}
+
+if (digest && digest.legacy) {
+  warnings.push('digest.json ainda traz a chave "legacy" (seção 911 Turbo S) — removida do layout na v6, pode ser apagada do payload.');
+}
+
 if (sources && digest) {
   const known = new Set(sources.sources.map((s) => s.id));
   const listings = [...(digest.market?.live ?? []), ...(digest.market?.sold ?? [])];
@@ -108,7 +147,9 @@ if (errors.length === 0) {
   await writeFile(resolve(OUT, 'personas.json'), JSON.stringify(personas, null, 2) + '\n');
   await writeFile(resolve(OUT, 'profile.json'), JSON.stringify(profile, null, 2) + '\n');
   await writeFile(resolve(OUT, 'sources.json'), JSON.stringify(sources, null, 2) + '\n');
-  console.log('config/ -> public/data/  (personas, profile, sources)');
+  await writeFile(resolve(OUT, 'dossiers.json'), JSON.stringify(dossiers, null, 2) + '\n');
+  await writeFile(resolve(OUT, 'library.json'), JSON.stringify(library, null, 2) + '\n');
+  console.log('config/ -> public/data/  (personas, profile, sources, dossiers, library)');
 }
 
 /* ----------------------------------------------------------------- relatos */

@@ -5,5 +5,7 @@
 public/data/personas.json
 public/data/profile.json
 public/data/sources.json
+public/data/dossiers.json
+public/data/library.json
 
 # public/data/digest.json É versionado — é o payload do dia, produzido pelo coletor.

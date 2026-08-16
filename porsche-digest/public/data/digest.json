@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": "5.0",
+    "schema_version": "6.0",
     "generated_at": "2026-08-16T09:00:00-03:00",
     "generator": "seed manual (pipeline de ingestão ainda não conectado)",
     "seed": true,
@@ -12,6 +12,18 @@
       "fetched_at": null,
       "stale": true
     }
+  },
+
+  "lead": {
+    "_note": "A abertura editorial: um argumento por edição. Quando ausente, o digest compõe um lead a partir dos próprios dados (melhor anúncio, movimento do índice). Este exemplo mostra o formato que o Hermes deve produzir.",
+    "kicker": "Abertura",
+    "headline": "A faixa é o assunto",
+    "standfirst": "Entre o 993 Carrera 4S mais barato e o mais caro desta edição cabe um segundo 911 inteiro. Entender por quê é mais útil que saber a mediana.",
+    "body": [
+      "Um índice de valuation entrega uma mediana e uma faixa. A mediana é a parte confortável do dado — e a menos informativa. O que decide compra é a distância entre os extremos, porque é ali que mora tudo o que a estatística não vê: histórico, originalidade, documentação, e quanto tempo o carro passou parado.",
+      "Dois exemplares da mesma variante, do mesmo ano, com diferença de preço superior a 60% não são um erro de mercado. São dois carros diferentes vendidos sob o mesmo nome. A tabela abaixo tenta nomear essa diferença: cada anúncio recebe três notas, uma por lente, e a ordem muda conforme o peso que você dá a cada uma.",
+      "Vale ler a seção seguinte antes da tabela. Sem a lente, o número de aderência é só mais um número."
+    ]
   },
 
   "newsroom": {
@@ -71,6 +83,7 @@
         "documentation": "partial",
         "color_rarity": "desirable",
         "ends_at": "2026-08-19T18:00:00Z",
+        "editorial_note": "Exemplo do formato: uma frase de julgamento humano, escrita pelo Hermes. Quando ausente, o digest deriva a explicacao do proprio score — compare com os anuncios abaixo.",
         "flags": []
       },
       {
@@ -95,6 +108,7 @@
         "documentation": "complete",
         "color_rarity": "rare",
         "ends_at": "2026-08-17T15:00:00Z",
+        "editorial_note": "Segundo exemplo de nota editorial. O texto deve dizer o que a nota nao diz — contexto, procedencia, o que o anuncio omite.",
         "flags": ["dormant_over_24m"]
       },
       {
@@ -278,14 +292,5 @@
     "mode": "search",
     "note": "Enquanto a YouTube Data API v3 não estiver conectada, cada item é uma BUSCA parametrizada pelas video_queries da persona — link sempre válido, nada inventado. Com a API conectada, mode passa a 'curated' e cada item ganha id, thumbnail, duração e views.",
     "curated": { "piloto": [], "colecionador": [], "construtor": [] }
-  },
-
-  "legacy": {
-    "note": "Comparativo 993 vs. geração atual. Preencher com dados verificados antes de publicar — os campos abaixo estão vazios de propósito.",
-    "items": [
-      { "id": "power", "label": "Potência", "value_993": null, "value_current": null },
-      { "id": "accel", "label": "0–100 km/h", "value_993": null, "value_current": null },
-      { "id": "aero", "label": "Aerodinâmica", "value_993": null, "value_current": null }
-    ]
   }
 }

@@ -1,44 +1,52 @@
-# Porsche Digest — especificação v5
+# Porsche Digest — especificação v6
 
-Sucessor do `DIGEST_INSTRUCTIONS.md`. Recorte: **911 (993) Carrera 4S, 1996–1998**, com
-o air-cooled em geral como contexto — compra, mercado, peças, performance, tuning,
-manutenção, referências de design e história.
+Recorte: **911 (993) Carrera 4S, 1996–1998**, com o air-cooled em geral como contexto —
+história, compra, mercado, peças, performance, tuning, manutenção e referências de design.
 
 Publicado em `digest.costafamily.ai` (Cloudflare Pages). Gerado diariamente pelo Hermes.
 
-- Personas em profundidade → [`PERSONAS.md`](PERSONAS.md)
-- Contrato do JSON diário → [`CONTRATO_DIGEST_JSON.md`](CONTRATO_DIGEST_JSON.md)
-- Comandos de evolução → [`HERMES_TELEGRAM.md`](HERMES_TELEGRAM.md)
+| | |
+|---|---|
+| [`EDITORIAL.md`](EDITORIAL.md) | A linha editorial e os 5 princípios de design |
+| [`PERSONAS.md`](PERSONAS.md) | As três lentes em profundidade |
+| [`CONTRATO_DIGEST_JSON.md`](CONTRATO_DIGEST_JSON.md) | O que o coletor precisa produzir |
+| [`HERMES_TELEGRAM.md`](HERMES_TELEGRAM.md) | Comandos de evolução |
 
 ---
 
-## O que mudou em relação à v4
+## O que mudou na v6
 
-**1. As personas viraram lentes executáveis.** Antes eram três cards descritivos ao lado
-de uma tabela que os ignorava. Agora cada anúncio recebe três notas independentes, e a
-ordem da tabela responde à mistura que você escolhe. Detalhe em `PERSONAS.md`.
+A v5 era um **dashboard**: oito caixas paralelas com o mesmo peso visual, cada uma
+respondendo a uma pergunta diferente. Ler de cima a baixo não produzia conclusão nenhuma.
+A v6 reorganiza tudo em torno de hierarquia editorial. Raciocínio completo em
+`EDITORIAL.md`.
 
-**2. As seções foram reordenadas.** As personas subiram da posição 5 para a 2, antes de
-Mercado. A lente precisa ser lida antes daquilo que ela filtra — na ordem antiga, o leitor
-via a tabela ranqueada e só três seções depois descobria por qual critério.
+**1. Removida a seção "911 Turbo S 2026".** Comparar o 993 com o 911 atual não servia ao
+objetivo do projeto — informava sobre um carro que não está em questão. O espaço foi para
+o Arquivo.
 
-**3. Chart.js saiu; o gráfico é SVG inline.** Uma dependência de CDN para desenhar três
-linhas cobra um custo real — falha de rede quebra a seção, e o Pages passa a depender de
-terceiro. O gráfico de valuation é gerado em SVG puro em `digest.js`.
+**2. Nova seção: O Arquivo.** Um capítulo editorial por edição sobre o 993 — engenharia,
+desenho, mercado, história — em rotação determinística por dia do ano. Resolve o problema
+estrutural de qualquer digest diário: num dia sem anúncio novo, passa a haver o que ler.
+Conteúdo em `config/dossiers.json`.
 
-**4. Vídeos deixaram de ser lista fixa.** Não há IDs de YouTube inventados no repo. Cada
-lente publica suas `video_queries` como busca parametrizada — link sempre válido. Quando
-a YouTube Data API v3 entrar, `videos.mode` passa a `"curated"` e o mesmo bloco renderiza
-thumbnail, duração e views sem mudar o HTML.
+**3. Nova seção: A Abertura.** Um argumento por edição, antes de qualquer dado. Escrito
+pelo Hermes via `lead`; na ausência, composto a partir dos próprios dados e declarado
+como derivado.
 
-**5. Dados não coletados aparecem como pendência, nunca como número.** Campos vazios
-renderizam "a preencher" em amarelo; enquanto `meta.seed` for `true`, o digest exibe uma
-faixa de aviso no topo. A alternativa — preencher com valor plausível — produz um digest
-que parece pronto e informa errado.
+**4. Nova seção: A Biblioteca.** As 14 publicações de referência, cada uma registrando o
+que especificamente se toma dela. Mantém o benchmark verificável em vez de virar folclore.
 
-**6. As fontes viraram registro versionado.** As 22 URLs do briefing (com duas duplicatas
-resolvidas) estão em `config/sources.json` com região, tipo, seção, regra de dedup e
-método de ingestão. Todo método hoje está marcado **não verificado** — ver "Estado atual".
+**5. Julgamento por anúncio.** Cada item do Mercado carrega uma frase: `editorial_note`
+quando há leitura humana, ou uma explicação derivada do próprio score quando não há —
+tipograficamente distintas, para que máquina não se passe por gente.
+
+**6. Redesenho completo.** Papel e tinta no lugar de ouro sobre preto; serifada para voz
+editorial e sem-serifa para dado; status como ponto e palavra em vez de pílula de
+semáforo; capitular na abertura; seções numeradas com fio.
+
+**7. Peças e manutenção fundiram-se em A Oficina.** Eram duas caixas respondendo à mesma
+pergunta prática.
 
 ---
 
@@ -49,11 +57,13 @@ porsche-digest/
 ├── config/              fonte de verdade, editada à mão (ou pelo Telegram)
 │   ├── personas.json      as 3 lentes + função de score + blend
 │   ├── sources.json       25 fontes, ingestão, dedup, filtros
-│   └── profile.json       seu carro, pesos, alertas, manutenção
-├── public/              raiz do deploy no Pages
-│   ├── index.html         as 8 seções
+│   ├── profile.json       seu carro, pesos, alertas, manutenção
+│   ├── dossiers.json      os capítulos do Arquivo
+│   └── library.json       as 14 referências editoriais + benchmark
+├── public/              raiz do deploy
+│   ├── index.html         as 9 seções
 │   ├── assets/
-│   │   ├── digest.css     design system
+│   │   ├── digest.css     sistema editorial
 │   │   ├── digest.js      render
 │   │   └── scoring-core.mjs  lentes (compartilhado com o pipeline)
 │   └── data/            gerado — não editar à mão
@@ -64,153 +74,157 @@ porsche-digest/
     └── probe-sources.mjs  verifica quais fontes têm feed
 ```
 
-`config/` é escrito por humano; `public/data/` é gerado. `tools/build.mjs` faz a ponte e
-falha cedo quando um contrato quebra.
-
 ---
 
-## As 8 seções
+## As seções
 
-### 1 · Newsroom & Classic
+### — · A Abertura
 
-Carrossel horizontal de matérias recentes, renovado a cada geração.
+Um argumento por edição, com capitular e corpo em duas colunas. Não resume o digest:
+defende uma tese.
 
-- **Fontes** — Porsche Newsroom, Classic Driver, Elferspot Magazine
-- **Campos** — `title`, `date`, `summary`, `image`, `url`, `source`
-- **Layout** — cards de 280px, scroll horizontal com snap
-- **Pronto quando** — ≥3 itens, nenhum com mais de 14 dias, todos com `url` resolvível
-- **Evolução** — filtro por categoria, favoritos em localStorage
+- **Fonte** — `lead` no payload; sem ele, composição derivada dos dados
+- **Campos** — `kicker`, `headline`, `standfirst`, `body[]`
+- **Pronto quando** — a abertura não poderia ser trocada com a de outra edição sem alguém notar
 
-### 2 · As três lentes
+### 01 · Em pauta
 
-Os três cards de persona, montados direto de `config/personas.json` — o HTML não duplica
-nenhuma definição. Cada card traz tese, o que compra, o que valoriza, sinais de alerta,
-KPIs, vocabulário e o que ignora.
+Noticiário compacto — lista editorial, não carrossel de cards. Deliberadamente discreto:
+não compete com a matéria de capa.
 
-- **Pronto quando** — os três cards renderizam sem campo vazio
-- **Evolução** — membros em destaque, calendário de eventos, feed de posts
+- **Fontes** — Porsche Newsroom, Classic Driver, Elferspot e demais fontes editoriais
+- **Pronto quando** — ≥3 itens, nenhum com mais de 14 dias, `url` resolvível
 
-### 3 · Mercado & Leilões
+### 02 · O Arquivo
 
-Duas tabelas: **5 anúncios ao vivo** e **5 negócios fechados**, sobre 993 C4S 1996–1998.
+A matéria de capa. Capítulo rotativo sobre o 993, com barra lateral de pontos-chave,
+"A confirmar" e "Para aprofundar" ligando à Biblioteca.
 
-- **Fontes** — as 20 plataformas de venda em `config/sources.json` (EUA, Europa, Alemanha, Reino Unido)
-- **Controle** — três sliders de mistura + presets; re-ranqueia sem recarregar
-- **Colunas** — veículo, fonte, preço USD/BRL + delta vs índice, aderência + confiança, notas por lente, status
-- **Status** — `active` verde · `ending` amarelo · `ended` vermelho · `sold` cinza
+- **Fonte** — `config/dossiers.json`, rotação `dia-do-ano % nº de capítulos`
+- **Campos** — `kicker`, `title`, `standfirst`, `body[]`, `key_facts[]`, `fact_check[]`, `further_reading[]`
+- **Pronto quando** — capítulo com ≥3 parágrafos e `further_reading` resolvendo na Biblioteca
+- **Evolução** — imagem por capítulo; capítulos sobre variantes vizinhas; série sobre restauração
+
+> O corpo é prosa. Números vivem em `key_facts`, e o que exige conferência contra fonte
+> primária vai em `fact_check`, exibido como "A confirmar". Um capítulo sem `fact_check`
+> é o que afirma só o que é seguro afirmar.
+
+### 03 · As três lentes
+
+Os três cards, montados direto de `config/personas.json` — o HTML não duplica definição.
+Detalhe em `PERSONAS.md`.
+
+### 04 · O Mercado
+
+Anúncios ao vivo como linhas editoriais numeradas, mais a lista de negócios fechados.
+
+- **Fontes** — as 20 plataformas em `config/sources.json`
+- **Controle** — três sliders + presets; reordena sem recarregar
+- **Por anúncio** — título, fonte, preço USD/BRL, delta vs índice, aderência, confiança,
+  notas por lente, status, e a frase de julgamento
 - **Dedup** — Classic.com e Hemmings são agregadores; funde por VIN, senão por
-  (ano, modelo, cor, km ±2%) + preço ±5%, senão por similaridade de título >0.85.
-  A plataforma de origem prevalece; o agregador vai para `also_listed_on[]`.
+  (ano, modelo, cor, km ±2%) + preço ±5%, senão por similaridade de título >0.85
 - **Filtro** — 10º dígito do VIN (T=1996, V=1997, W=1998); sem VIN, filtro textual
-- **Pronto quando** — 5+5 itens, nenhum duplicado, todo `source_id` existente no registro
-- **Evolução** — sort/filter por coluna, alertas por regra, série histórica por anúncio
+- **Pronto quando** — 5+5 itens, sem duplicata, todo `source_id` no registro
+- **Evolução** — favoritos, alertas por regra, tempo de mercado por anúncio
 
-### 4 · Análise de valor
+### 05 · O Índice
 
-Gráfico de linhas com 3 séries + três cards de mediana, tendência 12 meses e faixa.
+Gráfico de 3 séries em SVG inline + medianas com faixa.
 
 - **Fontes** — Classic.com, BaT Index, relatórios PCA
-- **Modelos** — 993 Carrera 4S, 993 Carrera 2, 993 Turbo
 - **Pronto quando** — ≥8 períodos por série e `seed: false`
-- **Evolução** — janela de 5 anos, comparação com índices gerais, previsão
 
-> Enquanto for série de exemplo, o texto da seção diz isso explicitamente. Índice de
-> valuation é o dado do digest com maior chance de virar decisão de compra — é onde o
-> número inventado causa mais estrago.
+> É o dado com maior chance de virar decisão de compra. Enquanto for exemplo, a seção diz
+> isso no próprio texto.
 
-### 5 · Peças & acessórios
+### 06 · A Oficina
 
-Grid de fornecedores, cada um marcado com as lentes que atende.
+Fornecedores de peça e roteiro de inspeção lado a lado — o roteiro é o mesmo que a lente
+do Piloto usa para pontuar.
 
-- **Atuais** — Suncoast (OEM/Classic), FCP Euro (consumíveis), Pelican Parts (peças + DIY)
-- **Pronto quando** — ≥3 fornecedores, cada um com ≥1 lente marcada
-- **Evolução** — preço de peças de alto giro, comparador, integração de estoque
+- **Fontes** — `parts.suppliers[]` e `profile.maintenance.known_issues_to_track`
+- **Evolução** — preço de peças de alto giro, comparador, intervalos com alerta
 
-### 6 · Vídeos por lente
+### 07 · A Estrada
 
-Um bloco por lente. Em `mode: "search"`, lista as `video_queries` da persona como busca.
-Em `mode: "curated"`, lista vídeos com título, duração e views.
+Um bloco por lente. Em `mode: "search"`, as `video_queries` da persona viram busca
+parametrizada. Em `mode: "curated"`, vídeos com título e duração.
 
-- **Pronto quando** — 3 blocos com ≥3 itens cada
-- **Evolução** — YouTube Data API v3, curadoria automática por tags, histórico do que já apareceu
+### 08 · O Carro
 
-### 7 · Legado — 993 e a geração atual
+Ficha e uso do seu exemplar, de `config/profile.json`. Campo sem confirmação aparece como
+pendência.
 
-Comparativo de engenharia entre o último air-cooled e o 911 contemporâneo.
+### 09 · A Biblioteca
 
-- **Campos** — potência, 0–100 km/h, aerodinâmica (extensível)
-- **Estado** — vazio de propósito; preencher com dado verificado
-- **Evolução** — linha do tempo 993 → 996 → 997 → 991 → 992, tabela completa de specs
+As 14 publicações de referência, com o que se toma de cada uma.
 
-### 8 · Seu carro
-
-Ficha e manutenção, de `config/profile.json`, mais o roteiro de inspeção do 993.
-
-- **Pronto quando** — nenhum "a preencher" na coluna Ficha
-- **Evolução** — intervalos de revisão com alerta, histórico de custo por km
-
-> `engine_code` e `transmission_code` vieram do briefing e **não** foram verificados
-> contra o Kardex. Vale pedir o Kardex à Porsche Classic antes de publicar como fato.
+- **Fonte** — `config/library.json`
+- **Pronto quando** — toda `further_reading` dos capítulos resolve aqui (validado no build)
 
 ---
 
 ## Dados globais
 
-**Câmbio USD → BRL** — buscado a cada geração; fallback 5,11. Quando o fallback entra,
-o rodapé e o cabeçalho marcam "cotação defasada", e `alerts.cotacao_defasada` dispara
-acima de 48h.
+**Câmbio USD → BRL** — buscado a cada geração; fallback 5,11. Quando o fallback entra, o
+masthead e o colofão marcam "defasada", e `alerts.cotacao_defasada` dispara acima de 48h.
 
-**Formato de data** — `pt-BR` real: "16 de agosto de 2026". A v4 especificava
-"16 de August de 2026", que misturava dois idiomas — corrigido.
+**Formato de data** — `pt-BR` real: "16 de agosto de 2026".
 
-**Moeda** — USD `$142,500` · BRL `R$ 738.150` (separador brasileiro, não o americano).
+**Moeda** — USD `$142,500` · BRL `R$ 738.150`, com separador brasileiro.
 
-**Atribuição** — "Gerado por Hermes Carrera · <data> · cotação USD/BRL <taxa>", com a
-contagem de fontes registradas / verificadas / automatizáveis.
+**Colofão** — data, cotação, contagem de fontes registradas / verificadas / automatizáveis
+e o tamanho da Biblioteca.
 
 ---
 
 ## Design system
 
-| | |
-|---|---|
-| Preto | `#000000` — masthead e rodapé |
-| Ouro Porsche | `#d4af37` — acentos, marcador de seção, lente Colecionador |
-| Cinza claro | `#f5f5f5` — fundo alternado |
-| Cinza escuro | `#2c2c2c` |
-| Status ativo | `#27ae60` — também a lente Piloto |
-| Status encerrando | `#f39c12` — também pendências e baixa confiança |
-| Status encerrado | `#e74c3c` — também a lente Construtor |
+Derivado do benchmark. Princípios em `EDITORIAL.md`; tokens em `public/assets/digest.css`.
 
-Tipografia — `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`.
-Títulos 28–32px · subtítulos 16–18px · corpo 14–16px · legendas 12–14px.
+| | Claro | Escuro |
+|---|---|---|
+| Papel | `#faf8f5` | `#100f0d` |
+| Tinta | `#16130f` | `#ece7de` |
+| Tinta suave | `#453f37` | `#c3bbaf` |
+| Fio | `#ddd5c9` | `#2f2a24` |
+| Ouro (acento) | `#d4af37` / `#8a6d1f` | `#d4af37` |
 
-Espaçamento — seção 2rem (1,5rem no mobile) · gap 1,5rem · breakpoint 768px ·
-grid `auto-fit, minmax(260px, 1fr)`.
+Status em tinta, não em semáforo: ativo `#3f7d4e` · encerrando `#a8762a` ·
+encerrado `#8f3f34` · vendido `#6f675d`. As mesmas cores identificam Piloto,
+Colecionador e Construtor.
 
-Tema — claro por padrão, escuro por `prefers-color-scheme`, botão sobrepõe e persiste
-em localStorage. Tabelas largas rolam dentro do próprio contêiner: a página nunca rola
-na horizontal.
+**Tipografia** — display e prosa em `'Iowan Old Style', 'Palatino Linotype', Palatino,
+Georgia, serif`; dado e rótulo em stack de sistema sem serifa. Nenhuma fonte externa: o
+digest não depende de CDN.
+
+**Espaçamento** — seção 4,5rem (3rem no mobile); medida de leitura 68ch; largura 1160px.
+Breakpoints em 900px e 720px. Nada rola na horizontal.
+
+**Tema** — claro por padrão, escuro por `prefers-color-scheme`, botão sobrepõe e persiste.
 
 ---
 
 ## Fluxo diário
 
 ```
-1 COLETA          feeds e páginas das fontes habilitadas em sources.json
+1 COLETA          feeds e páginas das fontes habilitadas
                   cotação USD/BRL
-2 NORMALIZAÇÃO    schema único de anúncio; extração dos sinais das lentes
+2 NORMALIZAÇÃO    schema único; extração dos sinais das lentes
                   dedup contra agregadores; filtro 993 C4S 96-98
-3 GERAÇÃO         escreve public/data/digest.json com meta.seed = false
-4 VALIDAÇÃO       node tools/build.mjs   → falha aborta o deploy
+3 REDAÇÃO         compõe o `lead` da edição
+                  escreve `editorial_note` nos anúncios que merecem leitura
+4 GERAÇÃO         escreve public/data/digest.json com meta.seed = false
+5 VALIDAÇÃO       node tools/build.mjs   → falha aborta o deploy
                   node tools/score-listing.mjs --test
-5 DEPLOY          wrangler pages deploy public --project-name porsche-digest
-6 NOTIFICAÇÃO     resumo no Telegram: nº de anúncios, melhor aderência,
-                  alertas disparados, fontes que falharam
+6 DEPLOY          wrangler pages deploy public --project-name porsche-digest
+7 NOTIFICAÇÃO     resumo no Telegram
 ```
 
-A etapa 4 é a que impede um digest quebrado de chegar ao ar. Ela reprova `source_id`
-desconhecido, peso de lente que não soma 1 e curva de score inválida.
+A etapa 3 é a que separa jornal de feed, e a 5 é a que impede um digest quebrado de
+chegar ao ar — ela reprova `source_id` desconhecido, peso de lente que não soma 1, curva
+inválida, capítulo sem corpo e referência pendurada na Biblioteca.
 
 ---
 
@@ -218,39 +232,39 @@ desconhecido, peso de lente que não soma 1 e curva de score inválida.
 
 | | |
 |---|---|
+| Seções | 9 + abertura |
+| Capítulos no Arquivo | 7 |
+| Referências na Biblioteca | 14 |
 | Fontes registradas | 25 |
 | Ingestão **verificada** | **0** — rode `node tools/probe-sources.mjs --write` |
 | Dados de mercado | exemplo (`meta.seed: true`) |
 | Cotação | fallback 5,11 |
-| Seção Legado | vazia, aguardando dado verificado |
 | Ficha do carro | 8 campos pendentes |
-
-O método de ingestão de cada fonte é uma **hipótese**: o ambiente onde este repo foi
-escrito não tinha saída de rede para os sites de leilão, então nada foi testado. O probe
-converte hipótese em fato e é o primeiro passo antes de decidir o que automatizar.
+| Fotografia | **ausente** — ver a lacuna conhecida em `EDITORIAL.md` |
 
 ---
 
 ## Roadmap
 
-**Curto prazo (1–2 semanas)**
+**Curto prazo**
 - [ ] Rodar `probe-sources.mjs --write` e priorizar as fontes com feed real
-- [ ] Ligar o coletor do Hermes ao contrato de `digest.json` (`meta.seed: false`)
+- [ ] Ligar o coletor ao contrato (`meta.seed: false`)
 - [ ] Cotação USD/BRL ao vivo
-- [ ] Sort e filtro por coluna na tabela de mercado
-- [ ] Favoritar anúncios em localStorage
+- [ ] Hermes redigindo `lead` e `editorial_note` a cada edição
+- [ ] Fotografia: imagem de largura total entre a abertura e o Arquivo
 
-**Médio prazo (1 mês)**
+**Médio prazo**
 - [ ] Índice de valuation real (Classic.com / BaT Index)
+- [ ] Serifada própria auto-hospedada em `woff2` — maior ganho visual disponível
+- [ ] Imagem por capítulo do Arquivo
 - [ ] Alertas de `profile.json` disparando no Telegram
 - [ ] YouTube Data API v3 → `mode: "curated"`
 - [ ] Captura dos comentários do BaT como sinal de qualidade
-- [ ] EN / PT-BR / DE
 
-**Longo prazo (2–3 meses)**
+**Longo prazo**
 - [ ] Extração automática dos sinais das lentes a partir do texto do anúncio
-- [ ] Série histórica por anúncio (relistagens, quanto tempo no mercado)
-- [ ] Previsão de preço com faixa de incerteza explícita
+- [ ] Novos capítulos do Arquivo a partir de leitura das fontes da Biblioteca
+- [ ] Série histórica por anúncio (relistagens, tempo de mercado)
 - [ ] Comparação direta "este anúncio vs. o seu carro"
 
 ---
@@ -261,8 +275,10 @@ converte hipótese em fato e é o primeiro passo antes de decidir o que automati
 □ node tools/build.mjs           sem erro
 □ node tools/score-listing.mjs --test
 □ meta.seed = false
+□ `lead` escrito para a edição
 □ cotação do dia, sem flag de defasagem
-□ 5 ao vivo + 5 fechados, sem duplicata entre agregador e origem
+□ 5 ao vivo + 5 fechados, sem duplicata
+□ capítulo do Arquivo coerente com o dia
 □ deploy no Pages concluído
 □ resumo recebido no Telegram
 ```
