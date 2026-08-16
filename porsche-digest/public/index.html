@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Porsche Digest — 993 Carrera 4S</title>
+    <meta name="description" content="Digest diário sobre o Porsche 911 (993) Carrera 4S 1996-1998: mercado, peças, manutenção, tuning e referências de design, lidos por três lentes." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="./assets/digest.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="wrap masthead-row">
+        <div>
+          <div class="kicker">Porsche Digest</div>
+          <h1>911 (993) Carrera 4S</h1>
+          <div class="sub" id="masthead-sub">1996 – 1998 · o último 911 refrigerado a ar</div>
+        </div>
+        <div>
+          <div class="fx" id="fx">carregando…</div>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema">tema</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="seed-banner" hidden class="seed-banner">
+      <div class="wrap">
+        <strong>DADOS DE EXEMPLO</strong> — <span id="seed-msg"></span>
+      </div>
+    </div>
+
+    <main class="wrap" id="main">
+      <!-- 1 — Newsroom ------------------------------------------------->
+      <section id="newsroom">
+        <div class="sec-head">
+          <h2>Newsroom &amp; Classic</h2>
+          <p>Matérias recentes das fontes editoriais. Renovado a cada geração diária.</p>
+        </div>
+        <div class="rail" id="newsroom-rail"></div>
+      </section>
+
+      <!-- 2 — Personas: a lente vem ANTES do que ela filtra ------------->
+      <section id="personas">
+        <div class="sec-head">
+          <h2>As três lentes</h2>
+          <p>
+            Não são rótulos de comunidade: são critérios de leitura. Cada lente decide quais fontes
+            importam, quais sinais valem ponto e o que é defeito. Ajuste a mistura abaixo e o
+            ranqueamento de mercado se reorganiza.
+          </p>
+        </div>
+        <div class="grid grid-3" id="persona-cards"></div>
+      </section>
+
+      <!-- 3 — Mercado --------------------------------------------------->
+      <section id="market">
+        <div class="sec-head">
+          <h2>Mercado &amp; Leilões</h2>
+          <p>993 Carrera 4S 1996–1998 à venda e negócios fechados, ordenados pela sua mistura de lentes.</p>
+        </div>
+
+        <div class="blend">
+          <div class="blend-head">
+            <strong>Sua mistura de lentes</strong>
+            <span id="blend-summary"></span>
+          </div>
+          <div class="sliders" id="sliders"></div>
+          <div class="presets" id="presets"></div>
+        </div>
+
+        <div class="table-scroll">
+          <table id="live-table">
+            <thead>
+              <tr>
+                <th>Veículo</th>
+                <th>Fonte</th>
+                <th class="num">Preço</th>
+                <th class="num">Aderência</th>
+                <th>Por lente</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="live-body"></tbody>
+          </table>
+        </div>
+
+        <h3 style="margin: 1.75rem 0 0.6rem; font-size: 1rem">Negócios fechados recentes</h3>
+        <div class="table-scroll">
+          <table id="sold-table">
+            <thead>
+              <tr>
+                <th>Veículo</th>
+                <th>Fonte</th>
+                <th class="num">Preço</th>
+                <th class="num">km</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="sold-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4 — Valuation ------------------------------------------------->
+      <section id="valuation">
+        <div class="sec-head">
+          <h2>Análise de valor</h2>
+          <p id="valuation-note"></p>
+        </div>
+        <div class="chart-wrap">
+          <div id="chart"></div>
+          <div class="chart-legend" id="chart-legend"></div>
+        </div>
+        <div class="grid grid-3" id="valuation-cards" style="margin-top: 1.25rem"></div>
+      </section>
+
+      <!-- 5 — Peças ----------------------------------------------------->
+      <section id="parts">
+        <div class="sec-head">
+          <h2>Peças &amp; acessórios</h2>
+          <p>Fornecedores marcados pelas lentes que cada um atende.</p>
+        </div>
+        <div class="grid grid-3" id="parts-grid"></div>
+      </section>
+
+      <!-- 6 — Vídeos ---------------------------------------------------->
+      <section id="videos">
+        <div class="sec-head">
+          <h2>Vídeos por lente</h2>
+          <p id="videos-note"></p>
+        </div>
+        <div class="grid grid-3" id="videos-grid"></div>
+      </section>
+
+      <!-- 7 — Legado ---------------------------------------------------->
+      <section id="legacy">
+        <div class="sec-head">
+          <h2>Legado — 993 e a geração atual</h2>
+          <p>Comparativo de engenharia entre o último air-cooled e o 911 contemporâneo.</p>
+        </div>
+        <div class="grid grid-3" id="legacy-grid"></div>
+      </section>
+
+      <!-- 8 — Especificações -------------------------------------------->
+      <section id="specs">
+        <div class="sec-head">
+          <h2>Seu carro</h2>
+          <p>Preenchido a partir de <code>config/profile.json</code>. Campos vazios aparecem como pendência, nunca preenchidos por suposição.</p>
+        </div>
+        <div class="grid grid-2" id="specs-grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="attrib" id="attrib"></div>
+        <div id="footer-sources"></div>
+      </div>
+    </footer>
+
+    <script type="module" src="./assets/digest.js"></script>
+    <noscript>
+      <div class="wrap" style="padding: 2rem 1.25rem">
+        Este digest monta o conteúdo no navegador a partir de <code>data/digest.json</code>.
+        Habilite JavaScript, ou consulte os JSON diretamente em <code>/data/</code>.
+      </div>
+    </noscript>
+  </body>
+</html>

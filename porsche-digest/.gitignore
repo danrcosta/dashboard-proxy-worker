@@ -1,0 +1,9 @@
+# Cópias geradas por tools/build.mjs a partir de config/.
+# Não versionadas de propósito: duas cópias da mesma definição em git divergem
+# quando alguém edita config/ e esquece de rodar o build.
+# Rode `node tools/build.mjs` antes de servir ou publicar.
+public/data/personas.json
+public/data/profile.json
+public/data/sources.json
+
+# public/data/digest.json É versionado — é o payload do dia, produzido pelo coletor.

@@ -1,0 +1,291 @@
+{
+  "meta": {
+    "schema_version": "5.0",
+    "generated_at": "2026-08-16T09:00:00-03:00",
+    "generator": "seed manual (pipeline de ingestão ainda não conectado)",
+    "seed": true,
+    "seed_warning": "DADOS DE EXEMPLO. Nenhum valor aqui foi coletado de fonte real — servem só para exercitar o layout e o ranqueamento. O digest exibe um aviso enquanto meta.seed for true. O gerador diário deve produzir data/digest.json com seed=false.",
+    "exchange_rate": {
+      "pair": "USD/BRL",
+      "rate": 5.11,
+      "source": "fallback (config/sources.json > exchange_rate.fallback_rate)",
+      "fetched_at": null,
+      "stale": true
+    }
+  },
+
+  "newsroom": {
+    "articles": [
+      {
+        "title": "Exemplo de matéria do Porsche Newsroom",
+        "date": "2026-08-15",
+        "summary": "Placeholder de layout. O ingestor substitui por itens reais do feed do Newsroom.",
+        "image": null,
+        "url": "https://newsroom.porsche.com",
+        "source": "Porsche Newsroom",
+        "seed": true
+      },
+      {
+        "title": "Exemplo de matéria do Classic Driver",
+        "date": "2026-08-14",
+        "summary": "Placeholder de layout. Links apontam para a home da fonte enquanto não houver ingestão real.",
+        "image": null,
+        "url": "https://www.classicdriver.com",
+        "source": "Classic Driver",
+        "seed": true
+      },
+      {
+        "title": "Exemplo de matéria do Elferspot Magazine",
+        "date": "2026-08-13",
+        "summary": "Placeholder de layout.",
+        "image": null,
+        "url": "https://www.elferspot.com",
+        "source": "Elferspot",
+        "seed": true
+      }
+    ]
+  },
+
+  "market": {
+    "note": "5 anúncios ao vivo + 5 negócios fechados, conforme o briefing. Cada item traz os sinais que alimentam as 3 lentes — ver config/personas.json.",
+    "live": [
+      {
+        "id": "live-1",
+        "seed": true,
+        "status": "active",
+        "source_id": "bring_a_trailer",
+        "source_name": "Bring a Trailer",
+        "url": "https://bringatrailer.com",
+        "region": "usa",
+        "title": "1997 Carrera 4S — exemplo: rodado e revisado",
+        "year": 1997,
+        "color": "Arena Red",
+        "price_usd": 138000,
+        "price_vs_index": -0.05,
+        "mileage_km": 118000,
+        "owners": 3,
+        "service_history": "full",
+        "mechanical_freshness": "fresh",
+        "usability_mods": "tasteful_driver",
+        "originality": "original_repainted",
+        "documentation": "partial",
+        "color_rarity": "desirable",
+        "ends_at": "2026-08-19T18:00:00Z",
+        "flags": []
+      },
+      {
+        "id": "live-2",
+        "seed": true,
+        "status": "ending",
+        "source_id": "canepa",
+        "source_name": "Canepa",
+        "url": "https://www.canepa.com",
+        "region": "usa",
+        "title": "1998 Carrera 4S — exemplo: baixa km, tudo original, parado",
+        "year": 1998,
+        "color": "Riviera Blue",
+        "price_usd": 249000,
+        "price_vs_index": 0.12,
+        "mileage_km": 19000,
+        "owners": 1,
+        "service_history": "partial",
+        "mechanical_freshness": "overdue",
+        "usability_mods": "none",
+        "originality": "fully_original",
+        "documentation": "complete",
+        "color_rarity": "rare",
+        "ends_at": "2026-08-17T15:00:00Z",
+        "flags": ["dormant_over_24m"]
+      },
+      {
+        "id": "live-3",
+        "seed": true,
+        "status": "active",
+        "source_id": "schaltkulisse",
+        "source_name": "Schaltkulisse",
+        "url": "https://schaltkulisse.com",
+        "region": "germany",
+        "title": "1996 Carrera 4S — exemplo: backdate de builder reconhecido",
+        "year": 1996,
+        "color": "Slate Grey",
+        "price_usd": 196000,
+        "price_vs_index": 0.08,
+        "mileage_km": 74000,
+        "owners": 4,
+        "service_history": "full",
+        "mechanical_freshness": "fresh",
+        "usability_mods": "heavy_track",
+        "originality": "modified",
+        "documentation": "partial",
+        "color_rarity": "standard",
+        "build_coherence": "exemplary",
+        "builder_pedigree": "marquee",
+        "build_documentation": "full_dossier",
+        "power_to_weight": 340,
+        "flags": ["irreversible_mod"]
+      },
+      {
+        "id": "live-4",
+        "seed": true,
+        "status": "active",
+        "source_id": "elferspot",
+        "source_name": "Elferspot",
+        "url": "https://www.elferspot.com",
+        "region": "europe",
+        "title": "1997 Carrera 4S — exemplo: anúncio de dealer com pouca informação",
+        "year": 1997,
+        "color": "Black",
+        "price_usd": 152000,
+        "price_vs_index": -0.02,
+        "mileage_km": null,
+        "owners": null,
+        "service_history": null,
+        "flags": []
+      },
+      {
+        "id": "live-5",
+        "seed": true,
+        "status": "active",
+        "source_id": "paul_stephens",
+        "source_name": "Paul Stephens",
+        "url": "https://www.paul-stephens.com",
+        "region": "uk",
+        "title": "1997 Carrera 4S — exemplo: histórico completo, uso regular",
+        "year": 1997,
+        "color": "Ocean Blue",
+        "price_usd": 144000,
+        "price_vs_index": -0.11,
+        "mileage_km": 96000,
+        "owners": 2,
+        "service_history": "full_opc",
+        "mechanical_freshness": "due_soon",
+        "usability_mods": "none",
+        "originality": "fully_original",
+        "documentation": "good",
+        "color_rarity": "desirable",
+        "flags": []
+      }
+    ],
+    "sold": [
+      {
+        "id": "sold-1",
+        "seed": true,
+        "status": "sold",
+        "source_id": "bring_a_trailer",
+        "source_name": "Bring a Trailer",
+        "url": "https://bringatrailer.com",
+        "region": "usa",
+        "title": "1997 Carrera 4S — exemplo de negócio fechado",
+        "year": 1997,
+        "price_usd": 141000,
+        "mileage_km": 104000,
+        "sold_at": "2026-08-12"
+      },
+      {
+        "id": "sold-2",
+        "seed": true,
+        "status": "sold",
+        "source_id": "pcarmarket",
+        "source_name": "PCARMARKET",
+        "url": "https://www.pcarmarket.com",
+        "region": "usa",
+        "title": "1996 Carrera 4S — exemplo de negócio fechado",
+        "year": 1996,
+        "price_usd": 129500,
+        "mileage_km": 143000,
+        "sold_at": "2026-08-10"
+      },
+      {
+        "id": "sold-3",
+        "seed": true,
+        "status": "sold",
+        "source_id": "collecting_cars",
+        "source_name": "Collecting Cars",
+        "url": "https://collectingcars.com",
+        "region": "europe",
+        "title": "1998 Carrera 4S — exemplo de negócio fechado",
+        "year": 1998,
+        "price_usd": 178000,
+        "mileage_km": 61000,
+        "sold_at": "2026-08-08"
+      },
+      {
+        "id": "sold-4",
+        "seed": true,
+        "status": "sold",
+        "source_id": "classic_com",
+        "source_name": "CLASSIC.COM",
+        "url": "https://www.classic.com",
+        "region": "global",
+        "title": "1997 Carrera 4S — exemplo de negócio fechado",
+        "year": 1997,
+        "price_usd": 156000,
+        "mileage_km": 78000,
+        "sold_at": "2026-08-05",
+        "also_listed_on": ["hemmings"]
+      },
+      {
+        "id": "sold-5",
+        "seed": true,
+        "status": "sold",
+        "source_id": "hexagon_classics",
+        "source_name": "Hexagon Classics",
+        "url": "https://www.hexagonclassics.com",
+        "region": "uk",
+        "title": "1996 Carrera 4S — exemplo de negócio fechado",
+        "year": 1996,
+        "price_usd": 133000,
+        "mileage_km": 122000,
+        "sold_at": "2026-08-03"
+      }
+    ]
+  },
+
+  "valuation": {
+    "seed": true,
+    "note": "Série de exemplo. Substituir por índice real (Classic.com / BaT Index) antes de usar para qualquer decisão.",
+    "series_label": "Índice de exemplo — não use para decisão",
+    "points": [
+      { "period": "2023-Q3", "c4s": 118, "carrera": 82, "turbo": 240 },
+      { "period": "2023-Q4", "c4s": 121, "carrera": 83, "turbo": 246 },
+      { "period": "2024-Q1", "c4s": 126, "carrera": 85, "turbo": 255 },
+      { "period": "2024-Q2", "c4s": 131, "carrera": 86, "turbo": 262 },
+      { "period": "2024-Q3", "c4s": 129, "carrera": 85, "turbo": 258 },
+      { "period": "2024-Q4", "c4s": 134, "carrera": 87, "turbo": 268 },
+      { "period": "2025-Q1", "c4s": 139, "carrera": 89, "turbo": 275 },
+      { "period": "2025-Q2", "c4s": 143, "carrera": 90, "turbo": 281 },
+      { "period": "2025-Q3", "c4s": 141, "carrera": 90, "turbo": 279 },
+      { "period": "2025-Q4", "c4s": 146, "carrera": 92, "turbo": 288 },
+      { "period": "2026-Q1", "c4s": 149, "carrera": 93, "turbo": 294 },
+      { "period": "2026-Q2", "c4s": 152, "carrera": 94, "turbo": 299 }
+    ],
+    "models": [
+      { "id": "c4s", "label": "993 Carrera 4S", "median_usd": 152000, "trend_yoy": 0.063, "range_usd": [118000, 249000] },
+      { "id": "carrera", "label": "993 Carrera 2", "median_usd": 94000, "trend_yoy": 0.044, "range_usd": [72000, 138000] },
+      { "id": "turbo", "label": "993 Turbo", "median_usd": 299000, "trend_yoy": 0.064, "range_usd": [240000, 420000] }
+    ]
+  },
+
+  "parts": {
+    "suppliers": [
+      { "id": "suncoast", "name": "Suncoast Parts", "url": "https://www.suncoastparts.com", "category": "OEM e Porsche Classic", "note": "Catálogo amplo de peças de fábrica.", "personas": ["colecionador", "piloto"] },
+      { "id": "fcp_euro", "name": "FCP Euro", "url": "https://www.fcpeuro.com", "category": "Consumíveis", "note": "Garantia vitalícia em consumíveis — forte para quem roda.", "personas": ["piloto"] },
+      { "id": "pelican_parts", "name": "Pelican Parts", "url": "https://www.pelicanparts.com", "category": "Peças + DIY", "note": "Melhor base pública de artigos de manutenção 993.", "personas": ["piloto", "construtor"] }
+    ]
+  },
+
+  "videos": {
+    "mode": "search",
+    "note": "Enquanto a YouTube Data API v3 não estiver conectada, cada item é uma BUSCA parametrizada pelas video_queries da persona — link sempre válido, nada inventado. Com a API conectada, mode passa a 'curated' e cada item ganha id, thumbnail, duração e views.",
+    "curated": { "piloto": [], "colecionador": [], "construtor": [] }
+  },
+
+  "legacy": {
+    "note": "Comparativo 993 vs. geração atual. Preencher com dados verificados antes de publicar — os campos abaixo estão vazios de propósito.",
+    "items": [
+      { "id": "power", "label": "Potência", "value_993": null, "value_current": null },
+      { "id": "accel", "label": "0–100 km/h", "value_993": null, "value_current": null },
+      { "id": "aero", "label": "Aerodinâmica", "value_993": null, "value_current": null }
+    ]
+  }
+}

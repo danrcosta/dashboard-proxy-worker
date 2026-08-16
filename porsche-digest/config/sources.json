@@ -1,0 +1,301 @@
+{
+  "$schema_version": "5.0",
+  "description": "Registro de fontes do Porsche Digest. IMPORTANTE: o campo 'ingest.method' e uma HIPOTESE ate que 'ingest.verified' seja true. Rode `node tools/probe-sources.mjs` numa maquina com saida de rede para converter hipotese em fato — o script reescreve este arquivo com os resultados.",
+
+  "ingest_methods": {
+    "rss": "Feed XML publico. Barato, estavel, preferido.",
+    "json_api": "Endpoint JSON publico ou semi-publico.",
+    "scrape": "HTML parsing. Fragil — quebra quando o site muda. Exige seletor versionado.",
+    "manual": "Sem automacao viavel (login, JS pesado, ToS restritivo). Entra por curadoria via Telegram.",
+    "unknown": "Ainda nao investigado."
+  },
+
+  "legal_note": "Antes de habilitar 'scrape' em qualquer fonte, checar robots.txt e Termos de Uso do site. Bring a Trailer e Classic.com em particular restringem uso automatizado. Preferir sempre rss/json_api; quando so houver scrape, respeitar rate limit de 1 req/min e identificar o User-Agent.",
+
+  "dedup": {
+    "problem": "Classic.com e um AGREGADOR: o mesmo carro aparece nele e na plataforma de origem, gerando duplicata na tabela de Market.",
+    "strategy": [
+      "1. Chave forte: VIN normalizado (upper, sem espacos). Se presente em ambos, e o mesmo carro.",
+      "2. Chave media: (ano, modelo, cor_exterior, km +/- 2%) + preco +/- 5%.",
+      "3. Chave fraca: similaridade de titulo > 0.85 (Dice bigram) + mesma janela de 30 dias.",
+      "4. Ao fundir, manter o registro da PLATAFORMA DE ORIGEM e guardar o agregador em 'also_listed_on[]'."
+    ],
+    "aggregators": ["classic_com", "hemmings"]
+  },
+
+  "vin_filter": {
+    "note": "Filtro alvo do digest: 993 Carrera 4S, model years 1996-1998.",
+    "model_year_code": {
+      "position": "10o digito do VIN",
+      "T": 1996,
+      "V": 1997,
+      "W": 1998
+    },
+    "caution": "Nem toda fonte expoe VIN. Quando ausente, cair para o filtro textual abaixo."
+  },
+
+  "text_filter": {
+    "must_match_any": ["993", "Carrera 4S", "C4S", "Carrera 4 S"],
+    "must_match_year": ["1996", "1997", "1998"],
+    "exclude": ["964", "996", "997", "991", "992", "Turbo S 993 replica", "kit car", "replica"],
+    "adjacent_allow": {
+      "note": "Itens 993 nao-4S entram apenas na secao de contexto de mercado, nunca no ranking principal.",
+      "terms": ["993 Turbo", "993 Carrera S", "993 Carrera 2", "993 Carrera 4", "993 GT2", "993 RS"]
+    }
+  },
+
+  "sources": [
+    {
+      "id": "porsche_newsroom",
+      "name": "Porsche Newsroom",
+      "url": "https://newsroom.porsche.com",
+      "region": "global",
+      "type": "news",
+      "section": ["newsroom"],
+      "ingest": { "method": "rss", "candidate_url": "https://newsroom.porsche.com/en.rss", "verified": false }
+    },
+    {
+      "id": "porsche_classic_partners",
+      "name": "Porsche Classic Partners",
+      "url": "https://www.porsche.com/usa/accessoriesandservice/classic/classic-partner/",
+      "region": "usa",
+      "type": "dealer_network",
+      "section": ["market", "parts"],
+      "ingest": { "method": "manual", "verified": false, "reason": "Diretorio de parceiros, nao listagem de estoque." }
+    },
+
+    {
+      "id": "bring_a_trailer",
+      "name": "Bring a Trailer",
+      "url": "https://bringatrailer.com",
+      "region": "usa",
+      "type": "auction",
+      "section": ["market", "sold"],
+      "priority": 1,
+      "ingest": { "method": "rss", "candidate_url": "https://bringatrailer.com/porsche/993/feed/", "verified": false },
+      "capture_comments": true,
+      "notes": "Fonte primaria de precos REALIZADOS. Os comentarios sao sinal de qualidade (repintura, painel trocado) — capturar comentarios marcados por especialistas."
+    },
+    {
+      "id": "pcarmarket",
+      "name": "PCARMARKET",
+      "url": "https://www.pcarmarket.com",
+      "region": "usa",
+      "type": "auction",
+      "section": ["market", "sold"],
+      "priority": 2,
+      "ingest": { "method": "unknown", "verified": false }
+    },
+    {
+      "id": "pca_mart",
+      "name": "PCA Mart",
+      "url": "https://mart.pca.org",
+      "region": "usa",
+      "type": "classifieds",
+      "section": ["market"],
+      "ingest": { "method": "unknown", "verified": false, "reason": "Pode exigir login de membro PCA." }
+    },
+    {
+      "id": "classic_com",
+      "name": "CLASSIC.COM",
+      "url": "https://www.classic.com",
+      "region": "global",
+      "type": "aggregator",
+      "section": ["market", "valuation"],
+      "priority": 1,
+      "is_aggregator": true,
+      "ingest": { "method": "unknown", "verified": false },
+      "notes": "Melhor fonte de INDICE/valuation historico. Como listagem, gera duplicata — ver dedup.aggregators."
+    },
+    {
+      "id": "hemmings",
+      "name": "Hemmings",
+      "url": "https://www.hemmings.com",
+      "region": "usa",
+      "type": "aggregator",
+      "section": ["market"],
+      "is_aggregator": true,
+      "ingest": { "method": "rss", "candidate_url": "https://www.hemmings.com/blog/feed/", "verified": false, "reason": "Feed conhecido e do blog editorial; feed de classificados nao confirmado." }
+    },
+    {
+      "id": "collecting_cars",
+      "name": "Collecting Cars",
+      "url": "https://collectingcars.com",
+      "region": "global",
+      "type": "auction",
+      "section": ["market", "sold"],
+      "priority": 2,
+      "ingest": { "method": "unknown", "verified": false },
+      "notes": "Briefing listava 'Collecting Cars USA' e 'Collecting Cars' como fontes separadas — e o mesmo dominio. Unificado aqui com cobertura global."
+    },
+    {
+      "id": "sloan_motor_cars",
+      "name": "Sloan Motor Cars",
+      "url": "https://www.sloanmotorcars.com",
+      "region": "usa",
+      "type": "dealer",
+      "section": ["market"],
+      "ingest": { "method": "unknown", "verified": false }
+    },
+    {
+      "id": "canepa",
+      "name": "Canepa",
+      "url": "https://www.canepa.com",
+      "region": "usa",
+      "type": "dealer",
+      "section": ["market"],
+      "ingest": { "method": "unknown", "verified": false },
+      "notes": "Estoque pequeno e caro — alta relevancia para a lente Colecionador."
+    },
+    {
+      "id": "european_collectibles",
+      "name": "European Collectibles",
+      "url": "https://www.europeancollectibles.com",
+      "region": "usa",
+      "type": "dealer",
+      "section": ["market"],
+      "ingest": { "method": "unknown", "verified": false }
+    },
+
+    {
+      "id": "elferspot",
+      "name": "Elferspot",
+      "url": "https://www.elferspot.com",
+      "region": "europe",
+      "type": "marketplace",
+      "section": ["market"],
+      "priority": 1,
+      "ingest": { "method": "rss", "candidate_url": "https://www.elferspot.com/en/feed/", "verified": false, "reason": "Feed provavel do magazine; listagens podem exigir outro caminho." },
+      "notes": "Especialista 911. Melhor cobertura europeia para 993."
+    },
+    {
+      "id": "mobile_de",
+      "name": "Mobile.de",
+      "url": "https://www.mobile.de",
+      "region": "europe",
+      "type": "marketplace",
+      "section": ["market"],
+      "ingest": { "method": "manual", "verified": false, "reason": "API oficial exige credencial comercial; scraping vetado por ToS." }
+    },
+    {
+      "id": "autoscout24",
+      "name": "AutoScout24",
+      "url": "https://www.autoscout24.com",
+      "region": "europe",
+      "type": "marketplace",
+      "section": ["market"],
+      "ingest": { "method": "manual", "verified": false, "reason": "Mesma restricao do Mobile.de." }
+    },
+    {
+      "id": "classic_driver",
+      "name": "Classic Driver",
+      "url": "https://www.classicdriver.com",
+      "region": "europe",
+      "type": "marketplace",
+      "section": ["market", "design"],
+      "ingest": { "method": "rss", "candidate_url": "https://www.classicdriver.com/en/rss.xml", "verified": false },
+      "notes": "Tambem e fonte editorial forte para a secao de referencias de design."
+    },
+
+    {
+      "id": "early911s",
+      "name": "Early 911S",
+      "url": "https://early911s.de",
+      "region": "germany",
+      "type": "dealer",
+      "section": ["market"],
+      "ingest": { "method": "unknown", "verified": false }
+    },
+    {
+      "id": "schaltkulisse",
+      "name": "Schaltkulisse",
+      "url": "https://schaltkulisse.com",
+      "region": "germany",
+      "type": "dealer",
+      "section": ["market"],
+      "ingest": { "method": "unknown", "verified": false },
+      "notes": "Curadoria forte — relevante para a lente Construtor."
+    },
+
+    {
+      "id": "paul_stephens",
+      "name": "Paul Stephens",
+      "url": "https://www.paul-stephens.com",
+      "region": "uk",
+      "type": "dealer",
+      "section": ["market", "tuning"],
+      "ingest": { "method": "unknown", "verified": false },
+      "notes": "Autoart = builds proprios. Relevante para Construtor e Piloto."
+    },
+    {
+      "id": "autofarm",
+      "name": "Autofarm",
+      "url": "https://autofarm.co.uk",
+      "region": "uk",
+      "type": "specialist",
+      "section": ["market", "maintenance"],
+      "ingest": { "method": "unknown", "verified": false },
+      "notes": "Especialista tecnico — fonte de conteudo de manutencao, nao so de estoque."
+    },
+    {
+      "id": "export56",
+      "name": "Export 56",
+      "url": "https://www.export56.com",
+      "region": "uk",
+      "type": "dealer",
+      "section": ["market"],
+      "ingest": { "method": "unknown", "verified": false }
+    },
+    {
+      "id": "hexagon_classics",
+      "name": "Hexagon Classics",
+      "url": "https://www.hexagonclassics.com",
+      "region": "uk",
+      "type": "dealer",
+      "section": ["market"],
+      "ingest": { "method": "unknown", "verified": false }
+    },
+
+    {
+      "id": "suncoast",
+      "name": "Suncoast Parts",
+      "url": "https://www.suncoastparts.com",
+      "region": "usa",
+      "type": "parts",
+      "section": ["parts"],
+      "ingest": { "method": "unknown", "verified": false }
+    },
+    {
+      "id": "fcp_euro",
+      "name": "FCP Euro",
+      "url": "https://www.fcpeuro.com",
+      "region": "usa",
+      "type": "parts",
+      "section": ["parts"],
+      "ingest": { "method": "unknown", "verified": false },
+      "notes": "Garantia vitalicia em consumiveis — argumento forte para a lente Piloto."
+    },
+    {
+      "id": "pelican_parts",
+      "name": "Pelican Parts",
+      "url": "https://www.pelicanparts.com",
+      "region": "usa",
+      "type": "parts",
+      "section": ["parts", "maintenance"],
+      "ingest": { "method": "unknown", "verified": false },
+      "notes": "Adicionado: os DIY articles sao a melhor base publica de manutencao 993."
+    },
+
+    {
+      "id": "exchange_rate",
+      "name": "Cotacao USD/BRL",
+      "url": "https://open.er-api.com/v6/latest/USD",
+      "region": "global",
+      "type": "utility",
+      "section": ["global"],
+      "ingest": { "method": "json_api", "verified": false },
+      "fallback_rate": 5.11,
+      "notes": "Se a chamada falhar, usar fallback e MARCAR no rodape que a cotacao esta defasada, com a data da ultima cotacao boa."
+    }
+  ]
+}

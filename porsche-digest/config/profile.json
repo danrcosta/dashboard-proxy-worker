@@ -1,0 +1,73 @@
+{
+  "$schema_version": "5.0",
+  "description": "Perfil do proprietario e do carro. Este arquivo alimenta a secao 'Especificacoes Tecnicas' e o calculo de 'delta vs meu carro' na secao de Mercado. Campos com valor null precisam ser preenchidos por voce — o digest mostra 'a preencher' em vez de inventar dado.",
+
+  "owner": {
+    "name": null,
+    "locale": "pt-BR",
+    "timezone": "America/Sao_Paulo",
+    "telegram_bot": "@Danrcbh_bot"
+  },
+
+  "car": {
+    "model": "Porsche 911 (993) Carrera 4S",
+    "generation": "993",
+    "model_year": null,
+    "production_years_of_interest": [1996, 1997, 1998],
+    "engine_code": "M64/21",
+    "transmission_code": "G64/20",
+    "vin": null,
+    "chassis_number": null,
+    "color_exterior": null,
+    "color_interior": null,
+    "option_codes": [],
+    "mileage_km": null,
+    "mileage_updated_at": null,
+    "acquired_at": null,
+    "_note": "engine_code e transmission_code vieram do seu briefing e nao foram verificados contra o Kardex. Recomendado: solicitar o Kardex a Porsche Classic e confirmar antes de publicar como fato no digest."
+  },
+
+  "digest": {
+    "domain": "digest.costafamily.ai",
+    "title": "Porsche Digest — 993 Carrera 4S",
+    "language": "pt-BR",
+    "currency_primary": "USD",
+    "currency_secondary": "BRL",
+    "date_format": "D 'de' MMMM 'de' YYYY",
+    "theme": "auto"
+  },
+
+  "persona_weights": {
+    "_note": "Espelha personas.json > blend.default_weights. Ajustavel pelos sliders no digest ou via Telegram (/perfil piloto=60 colecionador=30 construtor=10).",
+    "piloto": 0.50,
+    "colecionador": 0.35,
+    "construtor": 0.15
+  },
+
+  "alerts": {
+    "_note": "Regras avaliadas a cada geracao. Disparam mensagem no Telegram.",
+    "rules": [
+      { "id": "bom_negocio", "when": "score_final >= 80 && price_vs_index <= -0.10", "message": "Anuncio com aderencia alta e abaixo do indice" },
+      { "id": "cor_rara", "when": "color_rarity in ['rare','pts']", "message": "993 C4S em cor rara no mercado" },
+      { "id": "queda_indice", "when": "index_change_30d <= -0.05", "message": "Indice do C4S caiu mais de 5% em 30 dias" },
+      { "id": "cotacao_defasada", "when": "exchange_rate_age_hours > 48", "message": "Cotacao USD/BRL desatualizada ha mais de 48h" }
+    ]
+  },
+
+  "maintenance": {
+    "_note": "Preencher com as datas reais do seu carro. O digest calcula os KPIs da lente Piloto a partir daqui.",
+    "last_service_date": null,
+    "last_service_km": null,
+    "tires_dot_date": null,
+    "known_issues_to_track": [
+      "Vedacao dos radiadores de oleo / vazamentos na traseira",
+      "Guias e tensionadores de corrente",
+      "Coifas de junta homocinetica (tracao integral do 4S)",
+      "Bombas de ar secundario (model years com AIR)",
+      "Trincas no coletor de escape",
+      "Fadiga do motor do teto solar / reguladores de vidro",
+      "Corrosao em batentes de porta e para-brisa"
+    ],
+    "_known_issues_disclaimer": "Lista de pontos de atencao comumente citados para 993 — usar como roteiro de inspecao, nao como diagnostico. Confirmar com especialista antes de agir."
+  }
+}
