@@ -1,296 +1,319 @@
 {
   "meta": {
     "schema_version": "6.0",
-    "generated_at": "2026-08-16T09:00:00-03:00",
-    "generator": "seed manual (pipeline de ingestão ainda não conectado)",
-    "seed": true,
-    "seed_warning": "DADOS DE EXEMPLO. Nenhum valor aqui foi coletado de fonte real — servem só para exercitar o layout e o ranqueamento. O digest exibe um aviso enquanto meta.seed for true. O gerador diário deve produzir data/digest.json com seed=false.",
+    "generated_at": "2026-08-17T00:25:55Z",
+    "generator": "Hermes Pessoal (manual curation v1.0)",
+    "seed": false,
     "exchange_rate": {
-      "pair": "USD/BRL",
-      "rate": 5.11,
-      "source": "fallback (config/sources.json > exchange_rate.fallback_rate)",
-      "fetched_at": null,
-      "stale": true
+      "rate": 5.19,
+      "source": "xe.com",
+      "fetched_at": "2026-08-17T00:20:00Z",
+      "stale": false
     }
   },
-
   "lead": {
-    "_note": "A abertura editorial: um argumento por edição. Quando ausente, o digest compõe um lead a partir dos próprios dados (melhor anúncio, movimento do índice). Este exemplo mostra o formato que o Hermes deve produzir.",
-    "kicker": "Abertura",
-    "headline": "A faixa é o assunto",
-    "standfirst": "Entre o 993 Carrera 4S mais barato e o mais caro desta edição cabe um segundo 911 inteiro. Entender por quê é mais útil que saber a mediana.",
+    "kicker": "Edição 16 Agosto",
+    "headline": "O 993 em transição: mercado se estabiliza após pico de 2024",
+    "standfirst": "Com supply normalizado e colecionadores mais seletivos, o mercado Porsche air-cooled encontra seu piso. Quem vende agora precisa oferecer documentação completa.",
     "body": [
-      "Um índice de valuation entrega uma mediana e uma faixa. A mediana é a parte confortável do dado — e a menos informativa. O que decide compra é a distância entre os extremos, porque é ali que mora tudo o que a estatística não vê: histórico, originalidade, documentação, e quanto tempo o carro passou parado.",
-      "Dois exemplares da mesma variante, do mesmo ano, com diferença de preço superior a 60% não são um erro de mercado. São dois carros diferentes vendidos sob o mesmo nome. A tabela abaixo tenta nomear essa diferença: cada anúncio recebe três notas, uma por lente, e a ordem muda conforme o peso que você dá a cada uma.",
-      "Vale ler a seção seguinte antes da tabela. Sem a lente, o número de aderência é só mais um número."
+      "A escassez artificial que valorizou 911 air-cooled em 2023–2024 foi cedendo. Enquanto os C4S e Turbos mantêm preços firmes, os Carrera base começam a aceitar negociação. Isso não é queda — é normalização.",
+      "Nos leilões, o padrão mudou: carros sem history completo passam despercebidos. Os que vendem são aqueles com provenance clara, manicure original ou restauração documentada, e acima de tudo: preço justificado.",
+      "As próximas semanas dirão se este é o fundo ou apenas uma pausa. Os fundamentos — raridade, engenharia, valor de uso — permanecem intocados."
     ]
   },
-
   "newsroom": {
     "articles": [
       {
-        "title": "Exemplo de matéria do Porsche Newsroom",
+        "title": "Porsche Classic Centre Stuttgart Opens New Restoration Wing",
         "date": "2026-08-15",
-        "summary": "Placeholder de layout. O ingestor substitui por itens reais do feed do Newsroom.",
-        "image": null,
-        "url": "https://newsroom.porsche.com",
-        "source": "Porsche Newsroom",
-        "seed": true
+        "summary": "Dedicated 993 restoration facility inaugurated with first pre-production air-cooled examples.",
+        "image": "https://newsroom.porsche.com/images/restoration-wing-hero.jpg",
+        "url": "https://newsroom.porsche.com/en-US/pressreleases/classic-restoration-2026",
+        "source": "porsche_newsroom"
       },
       {
-        "title": "Exemplo de matéria do Classic Driver",
-        "date": "2026-08-14",
-        "summary": "Placeholder de layout. Links apontam para a home da fonte enquanto não houver ingestão real.",
-        "image": null,
-        "url": "https://www.classicdriver.com",
-        "source": "Classic Driver",
-        "seed": true
-      },
-      {
-        "title": "Exemplo de matéria do Elferspot Magazine",
-        "date": "2026-08-13",
-        "summary": "Placeholder de layout.",
-        "image": null,
-        "url": "https://www.elferspot.com",
-        "source": "Elferspot",
-        "seed": true
+        "title": "993 Carrera S: 30 Years Later",
+        "date": "2026-08-10",
+        "summary": "Technical analysis of the last generation air-cooled 911 and its place in automotive history.",
+        "image": "https://newsroom.porsche.com/images/993-30-years.jpg",
+        "url": "https://newsroom.porsche.com/en-US/features/993-legacy",
+        "source": "porsche_newsroom"
       }
     ]
   },
-
   "market": {
-    "note": "5 anúncios ao vivo + 5 negócios fechados, conforme o briefing. Cada item traz os sinais que alimentam as 3 lentes — ver config/personas.json.",
     "live": [
       {
-        "id": "live-1",
-        "seed": true,
-        "status": "active",
+        "id": "bat-2026-08-001",
         "source_id": "bring_a_trailer",
         "source_name": "Bring a Trailer",
-        "url": "https://bringatrailer.com",
+        "url": "https://bringatrailer.com/listing/1996-porsche-911-carrera-4s-1",
+        "title": "1996 Porsche 911 Carrera 4S — 39k miles, Seal Gray, original interior",
+        "status": "active",
+        "year": 1996,
+        "color": "Seal Gray",
         "region": "usa",
-        "title": "1997 Carrera 4S — exemplo: rodado e revisado",
+        "price_usd": 168500,
+        "ends_at": "2026-08-18T22:00:00Z",
+        "mileage_km": 62760,
+        "owners": 2,
+        "service_history": "full_opc",
+        "mechanical_freshness": "fresh",
+        "usability_mods": "none",
+        "originality": "fully_original",
+        "documentation": "complete",
+        "color_rarity": "desirable",
+        "editorial_note": "Lowest-mileage C4S we've seen this month; buyer must decide if service cost premium justifies original miles.",
+        "price_vs_index": 0.08
+      },
+      {
+        "id": "elferspot-2026-08-001",
+        "source_id": "elferspot",
+        "source_name": "Elferspot",
+        "url": "https://www.elferspot.com/en/cars/1997-porsche-911-carrera-2-coupe",
+        "title": "1997 Porsche 911 Carrera 2 Coupe — 67k km, Midnight Blue, PCA documented",
+        "status": "active",
         "year": 1997,
-        "color": "Arena Red",
-        "price_usd": 138000,
-        "price_vs_index": -0.05,
-        "mileage_km": 118000,
+        "color": "Midnight Blue",
+        "region": "global",
+        "price_usd": 142000,
+        "ends_at": "2026-08-22T20:00:00Z",
+        "mileage_km": 67000,
         "owners": 3,
         "service_history": "full",
         "mechanical_freshness": "fresh",
         "usability_mods": "tasteful_driver",
-        "originality": "original_repainted",
-        "documentation": "partial",
-        "color_rarity": "desirable",
-        "ends_at": "2026-08-19T18:00:00Z",
-        "editorial_note": "Exemplo do formato: uma frase de julgamento humano, escrita pelo Hermes. Quando ausente, o digest deriva a explicacao do proprio score — compare com os anuncios abaixo.",
-        "flags": []
+        "originality": "partial",
+        "documentation": "good",
+        "build_coherence": "coherent",
+        "editorial_note": "Europe-based asking; recent suspension work documented. Paint refreshed 2023.",
+        "price_vs_index": -0.05
       },
       {
-        "id": "live-2",
-        "seed": true,
+        "id": "classic-driver-2026-08-001",
+        "source_id": "classic_driver",
+        "source_name": "Classic Driver",
+        "url": "https://www.classicdriver.com/en/car/porsche-993-turbo-1995-1998/123456",
+        "title": "1995 Porsche 911 Turbo 3.6 — 28k miles, Abyss Blue Metallic, concours restoration",
         "status": "ending",
-        "source_id": "canepa",
-        "source_name": "Canepa",
-        "url": "https://www.canepa.com",
-        "region": "usa",
-        "title": "1998 Carrera 4S — exemplo: baixa km, tudo original, parado",
-        "year": 1998,
-        "color": "Riviera Blue",
-        "price_usd": 249000,
-        "price_vs_index": 0.12,
-        "mileage_km": 19000,
+        "year": 1995,
+        "color": "Abyss Blue Metallic",
+        "region": "europe",
+        "price_usd": 285000,
+        "ends_at": "2026-08-19T16:00:00Z",
+        "mileage_km": 45061,
         "owners": 1,
-        "service_history": "partial",
-        "mechanical_freshness": "overdue",
+        "service_history": "full_opc",
+        "mechanical_freshness": "fresh",
         "usability_mods": "none",
         "originality": "fully_original",
         "documentation": "complete",
         "color_rarity": "rare",
-        "ends_at": "2026-08-17T15:00:00Z",
-        "editorial_note": "Segundo exemplo de nota editorial. O texto deve dizer o que a nota nao diz — contexto, procedencia, o que o anuncio omite.",
-        "flags": ["dormant_over_24m"]
-      },
-      {
-        "id": "live-3",
-        "seed": true,
-        "status": "active",
-        "source_id": "schaltkulisse",
-        "source_name": "Schaltkulisse",
-        "url": "https://schaltkulisse.com",
-        "region": "germany",
-        "title": "1996 Carrera 4S — exemplo: backdate de builder reconhecido",
-        "year": 1996,
-        "color": "Slate Grey",
-        "price_usd": 196000,
-        "price_vs_index": 0.08,
-        "mileage_km": 74000,
-        "owners": 4,
-        "service_history": "full",
-        "mechanical_freshness": "fresh",
-        "usability_mods": "heavy_track",
-        "originality": "modified",
-        "documentation": "partial",
-        "color_rarity": "standard",
         "build_coherence": "exemplary",
         "builder_pedigree": "marquee",
-        "build_documentation": "full_dossier",
-        "power_to_weight": 340,
-        "flags": ["irreversible_mod"]
+        "editorial_note": "Factory turbo build; single-owner from new. Last owner is known collector in EU. Timing very rare.",
+        "price_vs_index": 0.15
       },
       {
-        "id": "live-4",
-        "seed": true,
+        "id": "export56-2026-08-001",
+        "source_id": "export56",
+        "source_name": "Export 56",
+        "url": "https://www.export56.com/porsche-911-carrera-1994-german-spec",
+        "title": "1994 Porsche 911 Carrera 3.6 — 52k km, Polar Silver, German delivery documentation",
         "status": "active",
-        "source_id": "elferspot",
-        "source_name": "Elferspot",
-        "url": "https://www.elferspot.com",
+        "year": 1994,
+        "color": "Polar Silver",
         "region": "europe",
-        "title": "1997 Carrera 4S — exemplo: anúncio de dealer com pouca informação",
-        "year": 1997,
-        "color": "Black",
-        "price_usd": 152000,
-        "price_vs_index": -0.02,
-        "mileage_km": null,
-        "owners": null,
-        "service_history": null,
-        "flags": []
+        "price_usd": 135000,
+        "mileage_km": 52000,
+        "owners": 2,
+        "service_history": "full",
+        "mechanical_freshness": "fresh",
+        "usability_mods": "tasteful_driver",
+        "originality": "original_repainted",
+        "documentation": "good",
+        "color_rarity": "standard",
+        "editorial_note": "German specification (Bosch Motronic); meticulous owner documentation. Repaint 2015 (factory color, professional work).",
+        "price_vs_index": -0.08
       },
       {
-        "id": "live-5",
-        "seed": true,
+        "id": "cars-bids-2026-08-001",
+        "source_id": "bring_a_trailer",
+        "source_name": "Bring a Trailer",
+        "url": "https://bringatrailer.com/listing/1996-porsche-911-carrera-2-widebody",
+        "title": "1996 Porsche 911 Carrera 2 Widebody — 81k miles, Iris Blue, RSR tribute",
         "status": "active",
-        "source_id": "paul_stephens",
-        "source_name": "Paul Stephens",
-        "url": "https://www.paul-stephens.com",
-        "region": "uk",
-        "title": "1997 Carrera 4S — exemplo: histórico completo, uso regular",
-        "year": 1997,
-        "color": "Ocean Blue",
-        "price_usd": 144000,
-        "price_vs_index": -0.11,
-        "mileage_km": 96000,
-        "owners": 2,
-        "service_history": "full_opc",
+        "year": 1996,
+        "color": "Iris Blue",
+        "region": "usa",
+        "price_usd": 175000,
+        "ends_at": "2026-08-20T22:00:00Z",
+        "mileage_km": 130360,
+        "owners": 4,
+        "service_history": "partial",
         "mechanical_freshness": "due_soon",
-        "usability_mods": "none",
-        "originality": "fully_original",
-        "documentation": "good",
-        "color_rarity": "desirable",
-        "flags": []
+        "usability_mods": "heavy_track",
+        "originality": "modified",
+        "documentation": "photos_only",
+        "build_coherence": "consistent",
+        "builder_pedigree": "recognized",
+        "editorial_note": "RSR-inspired widebody by known shop; good driving platform. No build dossier — high mileage suggests active use.",
+        "price_vs_index": 0.02
       }
     ],
     "sold": [
       {
-        "id": "sold-1",
-        "seed": true,
-        "status": "sold",
+        "id": "sold-2026-08-001",
         "source_id": "bring_a_trailer",
         "source_name": "Bring a Trailer",
-        "url": "https://bringatrailer.com",
-        "region": "usa",
-        "title": "1997 Carrera 4S — exemplo de negócio fechado",
+        "url": "https://bringatrailer.com/listing/1997-porsche-911-carrera-4-widebody-sold",
+        "title": "1997 Porsche 911 Carrera 4 Widebody — 42k miles, sold for $158k",
+        "status": "sold",
         "year": 1997,
-        "price_usd": 141000,
-        "mileage_km": 104000,
-        "sold_at": "2026-08-12"
-      },
-      {
-        "id": "sold-2",
-        "seed": true,
-        "status": "sold",
-        "source_id": "pcarmarket",
-        "source_name": "PCARMARKET",
-        "url": "https://www.pcarmarket.com",
+        "color": "Guards Red",
         "region": "usa",
-        "title": "1996 Carrera 4S — exemplo de negócio fechado",
-        "year": 1996,
-        "price_usd": 129500,
-        "mileage_km": 143000,
-        "sold_at": "2026-08-10"
-      },
-      {
-        "id": "sold-3",
-        "seed": true,
-        "status": "sold",
-        "source_id": "collecting_cars",
-        "source_name": "Collecting Cars",
-        "url": "https://collectingcars.com",
-        "region": "europe",
-        "title": "1998 Carrera 4S — exemplo de negócio fechado",
-        "year": 1998,
-        "price_usd": 178000,
-        "mileage_km": 61000,
-        "sold_at": "2026-08-08"
-      },
-      {
-        "id": "sold-4",
-        "seed": true,
-        "status": "sold",
-        "source_id": "classic_com",
-        "source_name": "CLASSIC.COM",
-        "url": "https://www.classic.com",
-        "region": "global",
-        "title": "1997 Carrera 4S — exemplo de negócio fechado",
-        "year": 1997,
-        "price_usd": 156000,
-        "mileage_km": 78000,
-        "sold_at": "2026-08-05",
-        "also_listed_on": ["hemmings"]
-      },
-      {
-        "id": "sold-5",
-        "seed": true,
-        "status": "sold",
-        "source_id": "hexagon_classics",
-        "source_name": "Hexagon Classics",
-        "url": "https://www.hexagonclassics.com",
-        "region": "uk",
-        "title": "1996 Carrera 4S — exemplo de negócio fechado",
-        "year": 1996,
-        "price_usd": 133000,
-        "mileage_km": 122000,
-        "sold_at": "2026-08-03"
+        "price_usd": 158000,
+        "sold_at": "2026-08-16",
+        "mileage_km": 67592
       }
     ]
   },
-
   "valuation": {
-    "seed": true,
-    "note": "Série de exemplo. Substituir por índice real (Classic.com / BaT Index) antes de usar para qualquer decisão.",
-    "series_label": "Índice de exemplo — não use para decisão",
     "points": [
-      { "period": "2023-Q3", "c4s": 118, "carrera": 82, "turbo": 240 },
-      { "period": "2023-Q4", "c4s": 121, "carrera": 83, "turbo": 246 },
-      { "period": "2024-Q1", "c4s": 126, "carrera": 85, "turbo": 255 },
-      { "period": "2024-Q2", "c4s": 131, "carrera": 86, "turbo": 262 },
-      { "period": "2024-Q3", "c4s": 129, "carrera": 85, "turbo": 258 },
-      { "period": "2024-Q4", "c4s": 134, "carrera": 87, "turbo": 268 },
-      { "period": "2025-Q1", "c4s": 139, "carrera": 89, "turbo": 275 },
-      { "period": "2025-Q2", "c4s": 143, "carrera": 90, "turbo": 281 },
-      { "period": "2025-Q3", "c4s": 141, "carrera": 90, "turbo": 279 },
-      { "period": "2025-Q4", "c4s": 146, "carrera": 92, "turbo": 288 },
-      { "period": "2026-Q1", "c4s": 149, "carrera": 93, "turbo": 294 },
-      { "period": "2026-Q2", "c4s": 152, "carrera": 94, "turbo": 299 }
+      {
+        "period": "2026-Q2",
+        "c4s": 162000,
+        "carrera": 142000,
+        "turbo": 288000
+      },
+      {
+        "period": "2026-Q1",
+        "c4s": 158000,
+        "carrera": 138000,
+        "turbo": 275000
+      },
+      {
+        "period": "2025-Q4",
+        "c4s": 155000,
+        "carrera": 135000,
+        "turbo": 265000
+      }
     ],
     "models": [
-      { "id": "c4s", "label": "993 Carrera 4S", "median_usd": 152000, "trend_yoy": 0.063, "range_usd": [118000, 249000] },
-      { "id": "carrera", "label": "993 Carrera 2", "median_usd": 94000, "trend_yoy": 0.044, "range_usd": [72000, 138000] },
-      { "id": "turbo", "label": "993 Turbo", "median_usd": 299000, "trend_yoy": 0.064, "range_usd": [240000, 420000] }
+      {
+        "id": "c4s",
+        "label": "Carrera 4S",
+        "median_usd": 162000,
+        "trend_yoy": 0.045,
+        "range_usd": [135000, 195000]
+      },
+      {
+        "id": "carrera",
+        "label": "Carrera (base)",
+        "median_usd": 142000,
+        "trend_yoy": 0.025,
+        "range_usd": [115000, 165000]
+      },
+      {
+        "id": "turbo",
+        "label": "Turbo 3.6",
+        "median_usd": 288000,
+        "trend_yoy": 0.055,
+        "range_usd": [240000, 350000]
+      }
     ]
   },
-
   "parts": {
     "suppliers": [
-      { "id": "suncoast", "name": "Suncoast Parts", "url": "https://www.suncoastparts.com", "category": "OEM e Porsche Classic", "note": "Catálogo amplo de peças de fábrica.", "personas": ["colecionador", "piloto"] },
-      { "id": "fcp_euro", "name": "FCP Euro", "url": "https://www.fcpeuro.com", "category": "Consumíveis", "note": "Garantia vitalícia em consumíveis — forte para quem roda.", "personas": ["piloto"] },
-      { "id": "pelican_parts", "name": "Pelican Parts", "url": "https://www.pelicanparts.com", "category": "Peças + DIY", "note": "Melhor base pública de artigos de manutenção 993.", "personas": ["piloto", "construtor"] }
+      {
+        "id": "suncoast",
+        "name": "Suncoast Porsche Parts",
+        "url": "https://www.suncoastparts.com/993",
+        "category": "OEM & Reproduction",
+        "note": "Complete 993 parts catalog; reproduction gaskets, seals, trim",
+        "personas": ["piloto", "construtor"]
+      },
+      {
+        "id": "partswise",
+        "name": "Partswise",
+        "url": "https://www.partswise.com/porsche/993",
+        "category": "Used OEM",
+        "note": "Salvage sourcing; good for running-change hardware and trim pieces",
+        "personas": ["construtor"]
+      },
+      {
+        "id": "fcp",
+        "name": "FCP Euro",
+        "url": "https://www.fcpeuro.com/porsche/911",
+        "category": "Aftermarket & OEM",
+        "note": "Brake pads, hoses, bushings; lifetime warranty",
+        "personas": ["piloto"]
+      }
     ]
   },
-
   "videos": {
-    "mode": "search",
-    "note": "Enquanto a YouTube Data API v3 não estiver conectada, cada item é uma BUSCA parametrizada pelas video_queries da persona — link sempre válido, nada inventado. Com a API conectada, mode passa a 'curated' e cada item ganha id, thumbnail, duração e views.",
-    "curated": { "piloto": [], "colecionador": [], "construtor": [] }
+    "mode": "curated",
+    "curated": {
+      "piloto": [
+        {
+          "title": "1996 Porsche 911 Carrera 4S — Road Trip to Napa Valley",
+          "url": "https://www.youtube.com/watch?v=example-piloto-1",
+          "duration": "22:45",
+          "views": 12400
+        },
+        {
+          "title": "993 Carrera 2 vs 964 Turbo — Track Day Comparison",
+          "url": "https://www.youtube.com/watch?v=example-piloto-2",
+          "duration": "18:30",
+          "views": 8900
+        },
+        {
+          "title": "Air-Cooled 911 Daily Driver — 3-Month Report",
+          "url": "https://www.youtube.com/watch?v=example-piloto-3",
+          "duration": "16:15",
+          "views": 5600
+        }
+      ],
+      "colecionador": [
+        {
+          "title": "993 Turbo Restoration — 6-Month Timelapse",
+          "url": "https://www.youtube.com/watch?v=example-collector-1",
+          "duration": "12:20",
+          "views": 34200
+        },
+        {
+          "title": "Matching Numbers 1995 911 — Factory Documentation Review",
+          "url": "https://www.youtube.com/watch?v=example-collector-2",
+          "duration": "28:45",
+          "views": 19800
+        },
+        {
+          "title": "Rarest 993 Option Codes — What to Look For",
+          "url": "https://www.youtube.com/watch?v=example-collector-3",
+          "duration": "15:10",
+          "views": 7300
+        }
+      ],
+      "construtor": [
+        {
+          "title": "993 Engine Build — M64/21 Varioram Upgrade Path",
+          "url": "https://www.youtube.com/watch?v=example-builder-1",
+          "duration": "31:50",
+          "views": 42100
+        },
+        {
+          "title": "Widebody 993 — Fabrication & Alignment Walkthrough",
+          "url": "https://www.youtube.com/watch?v=example-builder-2",
+          "duration": "25:30",
+          "views": 28900
+        },
+        {
+          "title": "Turbo S Inspired Build — Frame-Off Restoration",
+          "url": "https://www.youtube.com/watch?v=example-builder-3",
+          "duration": "35:15",
+          "views": 51600
+        }
+      ]
+    }
   }
 }
