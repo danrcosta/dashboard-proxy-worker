@@ -81,7 +81,7 @@
         "candidate_url": "https://newsroom.porsche.com/en.rss",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-17T00:23:44.765Z",
+        "probed_at": "2026-08-17T10:20:03.807Z",
         "probe_url": "https://newsroom.porsche.com/en.rss",
         "candidate_urls": [
           "https://newsroom.porsche.com/en.rss",
@@ -142,7 +142,7 @@
         "candidate_url": "https://bringatrailer.com/porsche/993/feed/",
         "verified": true,
         "reason": "feed com 20 itens, SEM mencao a 993 — checar se cobre o modelo",
-        "probed_at": "2026-08-17T00:23:51.034Z",
+        "probed_at": "2026-08-17T10:20:11.323Z",
         "probe_url": "https://bringatrailer.com/feed/",
         "candidate_urls": [
           "https://bringatrailer.com/porsche/993/feed/",
@@ -193,7 +193,7 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-17T00:23:54.531Z",
+        "probed_at": "2026-08-17T10:20:14.302Z",
         "probe_url": "https://www.pcarmarket.com",
         "probe_attempts": [
           {
@@ -217,7 +217,7 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-17T00:23:56.851Z",
+        "probed_at": "2026-08-17T10:20:16.496Z",
         "probe_url": "https://mart.pca.org",
         "probe_attempts": [
           {
@@ -325,7 +325,7 @@
         "method": "unknown",
         "verified": true,
         "reason": "feed respondeu XML mas com ZERO itens — candidate_url provavelmente errada; tentar outro caminho",
-        "probed_at": "2026-08-17T00:24:03.098Z",
+        "probed_at": "2026-08-17T10:20:22.535Z",
         "probe_url": "https://www.sloanmotorcars.com/feed/",
         "probe_attempts": [
           {
@@ -385,7 +385,7 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-17T00:24:05.505Z",
+        "probed_at": "2026-08-17T10:20:24.591Z",
         "probe_url": "https://www.europeancollectibles.com",
         "probe_attempts": [
           {
@@ -411,7 +411,7 @@
         "candidate_url": "https://www.elferspot.com/en/feed/",
         "verified": true,
         "reason": "feed com 10 itens, menciona 993",
-        "probed_at": "2026-08-17T00:24:08.865Z",
+        "probed_at": "2026-08-17T10:20:28.205Z",
         "probe_url": "https://www.elferspot.com/en/feed/",
         "probe_attempts": [
           {
@@ -469,7 +469,7 @@
         "candidate_url": "https://www.classicdriver.com/en/rss.xml",
         "verified": true,
         "reason": "feed com 10 itens, menciona 993",
-        "probed_at": "2026-08-17T00:24:11.673Z",
+        "probed_at": "2026-08-17T10:20:30.204Z",
         "probe_url": "https://www.classicdriver.com/en/rss.xml",
         "probe_attempts": [
           {
@@ -495,7 +495,7 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-17T00:24:13.908Z",
+        "probed_at": "2026-08-17T10:20:32.432Z",
         "probe_url": "https://early911s.de",
         "probe_attempts": [
           {
@@ -519,7 +519,7 @@
         "method": "unknown",
         "verified": true,
         "reason": "feed respondeu XML mas com ZERO itens — candidate_url provavelmente errada; tentar outro caminho",
-        "probed_at": "2026-08-17T00:24:21.847Z",
+        "probed_at": "2026-08-17T10:20:40.446Z",
         "probe_url": "https://schaltkulisse.com/en/feed/",
         "probe_attempts": [
           {
@@ -555,7 +555,7 @@
         "method": "rss",
         "verified": true,
         "reason": "feed com 10 itens, menciona 993",
-        "probed_at": "2026-08-17T00:24:27.790Z",
+        "probed_at": "2026-08-17T10:20:46.460Z",
         "probe_url": "https://www.paul-stephens.com/feed/",
         "probe_attempts": [
           {
@@ -586,7 +586,7 @@
         "method": "rss",
         "verified": true,
         "reason": "feed com 10 itens, SEM mencao a 993 — checar se cobre o modelo",
-        "probed_at": "2026-08-17T00:24:34.350Z",
+        "probed_at": "2026-08-17T10:20:53.404Z",
         "probe_url": "https://autofarm.co.uk/feed/",
         "probe_attempts": [
           {
@@ -616,7 +616,7 @@
         "method": "rss",
         "verified": true,
         "reason": "feed com 12 itens, SEM mencao a 993 — checar se cobre o modelo",
-        "probed_at": "2026-08-17T00:24:38.932Z",
+        "probed_at": "2026-08-17T10:20:57.981Z",
         "probe_url": "https://www.export56.com/feed/",
         "probe_attempts": [
           {
@@ -645,7 +645,7 @@
         "method": "scrape",
         "verified": true,
         "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
-        "probed_at": "2026-08-17T00:24:41.441Z",
+        "probed_at": "2026-08-17T10:21:00.498Z",
         "probe_url": "https://www.hexagonclassics.com",
         "probe_attempts": [
           {
@@ -747,7 +747,7 @@
         "method": "json_api",
         "verified": true,
         "reason": "respondeu JSON",
-        "probed_at": "2026-08-17T00:24:43.031Z",
+        "probed_at": "2026-08-17T10:21:02.073Z",
         "probe_url": "https://open.er-api.com/v6/latest/USD",
         "probe_attempts": [
           {
@@ -761,7 +761,7 @@
       "notes": "Se a chamada falhar, usar fallback e MARCAR no rodape que a cotacao esta defasada, com a data da ultima cotacao boa."
     }
   ],
-  "probed_at": "2026-08-17T00:24:44.546Z",
+  "probed_at": "2026-08-17T10:21:03.585Z",
   "candidate_note": "Um feed que responde XML mas traz ZERO itens NAO conta como fonte utilizavel: quase sempre significa caminho errado. Por isso as fontes cujo feed veio vazio ganharam candidatas alternativas. O probe tambem faz AUTODESCOBERTA: quando uma candidata devolve HTML, ele le <link rel='alternate' type='application/rss+xml'> da propria pagina e segue o feed declarado, em vez de adivinhar caminhos.",
   "blocked_policy": "As 7 fontes que devolveram 403 foram investigadas manualmente (rodape, /api, /developers, tag link rel=alternate) e nenhuma publica feed ou API oficial. Ficam como 'manual' — o que tambem faz o probe parar de bate-las a cada rodada. Nao mascarar User-Agent para contornar: e controle de acesso deliberado, e sao sites com quem pode haver relacao comercial depois. Revisitar se alguma passar a publicar API."
 }
