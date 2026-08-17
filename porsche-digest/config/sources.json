@@ -237,18 +237,19 @@
       "priority": 1,
       "is_aggregator": true,
       "ingest": {
-        "method": "unknown",
+        "method": "manual",
         "verified": true,
-        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
         "probed_at": "2026-08-16T23:57:26.553Z",
         "probe_url": "https://www.classic.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
         "probe_attempts": [
           {
             "url": "https://www.classic.com",
             "status": 403
           }
-        ]
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
       },
       "notes": "Melhor fonte de INDICE/valuation historico. Como listagem, gera duplicata — ver dedup.aggregators."
     },
@@ -263,19 +264,20 @@
       ],
       "is_aggregator": true,
       "ingest": {
-        "method": "unknown",
+        "method": "manual",
         "candidate_url": "https://www.hemmings.com/blog/feed/",
         "verified": true,
-        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
         "probed_at": "2026-08-16T23:57:28.211Z",
         "probe_url": "https://www.hemmings.com/blog/feed/",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
         "probe_attempts": [
           {
             "url": "https://www.hemmings.com/blog/feed/",
             "status": 403
           }
-        ]
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
       }
     },
     {
@@ -290,18 +292,19 @@
       ],
       "priority": 2,
       "ingest": {
-        "method": "unknown",
+        "method": "manual",
         "verified": true,
-        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
         "probed_at": "2026-08-16T23:57:29.790Z",
         "probe_url": "https://collectingcars.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
         "probe_attempts": [
           {
             "url": "https://collectingcars.com",
             "status": 403
           }
-        ]
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
       },
       "notes": "Briefing listava 'Collecting Cars USA' e 'Collecting Cars' como fontes separadas — e o mesmo dominio. Unificado aqui com cobertura global."
     },
@@ -338,18 +341,19 @@
         "market"
       ],
       "ingest": {
-        "method": "unknown",
+        "method": "manual",
         "verified": true,
-        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
         "probed_at": "2026-08-16T23:57:33.931Z",
         "probe_url": "https://www.canepa.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
         "probe_attempts": [
           {
             "url": "https://www.canepa.com",
             "status": 403
           }
-        ]
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
       },
       "notes": "Estoque pequeno e caro — alta relevancia para a lente Colecionador."
     },
@@ -613,18 +617,19 @@
         "parts"
       ],
       "ingest": {
-        "method": "unknown",
+        "method": "manual",
         "verified": true,
-        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "reason": "HTTP 403 ao acesso automatizado (Cloudflare Challenge). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
         "probed_at": "2026-08-16T23:58:00.098Z",
         "probe_url": "https://www.suncoastparts.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
         "probe_attempts": [
           {
             "url": "https://www.suncoastparts.com",
             "status": 403
           }
-        ]
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
       }
     },
     {
@@ -637,18 +642,19 @@
         "parts"
       ],
       "ingest": {
-        "method": "unknown",
+        "method": "manual",
         "verified": true,
-        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
         "probed_at": "2026-08-16T23:58:01.678Z",
         "probe_url": "https://www.fcpeuro.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
         "probe_attempts": [
           {
             "url": "https://www.fcpeuro.com",
             "status": 403
           }
-        ]
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
       },
       "notes": "Garantia vitalicia em consumiveis — argumento forte para a lente Piloto."
     },
@@ -663,18 +669,19 @@
         "maintenance"
       ],
       "ingest": {
-        "method": "unknown",
+        "method": "manual",
         "verified": true,
-        "reason": "acesso automatizado recusado (HTTP 403) — o site bloqueia bots; procurar feed/API oficial ou tratar como manual",
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
         "probed_at": "2026-08-16T23:58:03.240Z",
         "probe_url": "https://www.pelicanparts.com",
-        "blocked_note": "Devolveu 403 ao User-Agent do bot. E um controle de acesso do site, nao ausencia de conteudo. Caminho correto: procurar feed/API oficial documentado. NAO mascarar o User-Agent para contornar. Sem rota oficial, tratar como 'manual' (curadoria).",
         "probe_attempts": [
           {
             "url": "https://www.pelicanparts.com",
             "status": 403
           }
-        ]
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
       },
       "notes": "Adicionado: os DIY articles sao a melhor base publica de manutencao 993."
     },
@@ -705,5 +712,6 @@
     }
   ],
   "probed_at": "2026-08-16T23:58:06.370Z",
-  "candidate_note": "Um feed que responde XML mas traz ZERO itens NAO conta como fonte utilizavel: quase sempre significa caminho errado. Por isso as fontes cujo feed veio vazio ganharam candidatas alternativas. O probe tambem faz AUTODESCOBERTA: quando uma candidata devolve HTML, ele le <link rel='alternate' type='application/rss+xml'> da propria pagina e segue o feed declarado, em vez de adivinhar caminhos."
+  "candidate_note": "Um feed que responde XML mas traz ZERO itens NAO conta como fonte utilizavel: quase sempre significa caminho errado. Por isso as fontes cujo feed veio vazio ganharam candidatas alternativas. O probe tambem faz AUTODESCOBERTA: quando uma candidata devolve HTML, ele le <link rel='alternate' type='application/rss+xml'> da propria pagina e segue o feed declarado, em vez de adivinhar caminhos.",
+  "blocked_policy": "As 7 fontes que devolveram 403 foram investigadas manualmente (rodape, /api, /developers, tag link rel=alternate) e nenhuma publica feed ou API oficial. Ficam como 'manual' — o que tambem faz o probe parar de bate-las a cada rodada. Nao mascarar User-Agent para contornar: e controle de acesso deliberado, e sao sites com quem pode haver relacao comercial depois. Revisitar se alguma passar a publicar API."
 }
