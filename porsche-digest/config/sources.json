@@ -173,7 +173,8 @@
         ]
       },
       "capture_comments": true,
-      "notes": "Fonte primaria de precos REALIZADOS. Os comentarios sao sinal de qualidade (repintura, painel trocado) — capturar comentarios marcados por especialistas."
+      "notes": "Fonte primaria de precos REALIZADOS. Os comentarios sao sinal de qualidade (repintura, painel trocado) — capturar comentarios marcados por especialistas.",
+      "coverage_note": "Os feeds por modelo (/porsche/993/feed/, /porsche/993-carrera-4s/feed/, /porsche/feed/) respondem 200 com ZERO itens — o padrao de taxonomia nao gera feed. So o feed geral do site (/feed/) traz conteudo: 20 leiloes mais recentes de TODAS as marcas, sem nenhum 993 na janela testada em 2026-08-16. Consequencia pratica: formato ok, cobertura nao. Um 993 C4S aparece poucas vezes por mes no BaT; uma janela rolante de 20 itens perde quase todos, a menos que o coletor rode com frequencia alta e mantenha estado do que ja viu. Decidir se vale, ou se BaT entra por curadoria manual."
     },
     {
       "id": "pcarmarket",
@@ -704,5 +705,5 @@
     }
   ],
   "probed_at": "2026-08-16T23:58:06.370Z",
-  "candidate_note": "Um feed que responde XML mas traz ZERO itens NAO conta como fonte utilizavel: quase sempre significa caminho errado. Por isso as fontes cujo feed veio vazio ganharam candidatas alternativas."
+  "candidate_note": "Um feed que responde XML mas traz ZERO itens NAO conta como fonte utilizavel: quase sempre significa caminho errado. Por isso as fontes cujo feed veio vazio ganharam candidatas alternativas. O probe tambem faz AUTODESCOBERTA: quando uma candidata devolve HTML, ele le <link rel='alternate' type='application/rss+xml'> da propria pagina e segue o feed declarado, em vez de adivinhar caminhos."
 }

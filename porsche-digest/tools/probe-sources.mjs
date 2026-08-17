@@ -61,6 +61,34 @@ function inspectFeed(body) {
 
 const mentions993 = (body) => /\b993\b/.test(body);
 
+/**
+ * Autodescoberta de feed: quando uma candidata devolve HTML, o próprio HTML
+ * costuma declarar onde está o feed:
+ *
+ *   <link rel="alternate" type="application/rss+xml" href="/feed/">
+ *
+ * É o padrão de descoberta, e usá-lo é estritamente melhor que adivinhar
+ * caminhos — foi adivinhando que erramos as quatro candidatas do Porsche
+ * Newsroom. Devolve até `limit` URLs absolutas.
+ */
+export function discoverFeeds(html, baseUrl, limit = 3) {
+  const found = [];
+  for (const tag of html.match(/<link\b[^>]*>/gi) ?? []) {
+    if (!/rel\s*=\s*["']?alternate/i.test(tag)) continue;
+    if (!/type\s*=\s*["']?application\/(rss|atom)\+xml/i.test(tag)) continue;
+    const href = tag.match(/href\s*=\s*["']([^"']+)["']/i)?.[1];
+    if (!href) continue;
+    try {
+      const absolute = new URL(href, baseUrl).href;
+      if (!found.includes(absolute)) found.push(absolute);
+    } catch {
+      /* href malformado — ignora */
+    }
+    if (found.length >= limit) break;
+  }
+  return found;
+}
+
 /** Um feed só serve se responde XML E traz itens. */
 const isUsableFeed = (r) => r?.ok && r.isFeed && r.itemCount > 0;
 const isJsonApi = (r) => r?.ok && !r.isFeed && /json/i.test(r.contentType ?? '');
@@ -84,6 +112,7 @@ async function probe(url) {
       ...feed,
       mentions993: feed.isFeed && feed.itemCount > 0 ? mentions993(body) : undefined,
       bytes: body.length,
+      body: feed.isFeed ? undefined : body, // só o HTML interessa, para autodescoberta
     };
   } catch (error) {
     return { url, ok: false, status: 0, error: error.name === 'AbortError' ? 'timeout' : error.message };
@@ -148,78 +177,135 @@ function verdictFor(attempts) {
   };
 }
 
+/**
+ * Um feed pode ser válido e mesmo assim não servir: o feed geral do Bring a
+ * Trailer traz 20 leilões de todas as marcas e pode não conter nenhum 993 numa
+ * janela qualquer. Formato e cobertura são perguntas diferentes.
+ */
+function winnerCoversModel(attempts, verdict) {
+  if (verdict.method !== 'rss') return null;
+  const winner = attempts.find((a) => a.url === verdict.url);
+  return winner?.mentions993 ?? null;
+}
+
 /* ------------------------------------------------------------------ execução */
 
-const doc = JSON.parse(await readFile(SOURCES_PATH, 'utf8'));
-const rows = [];
+/**
+ * A execução fica atrás de uma guarda de módulo principal. Sem isso, um simples
+ * `import` deste arquivo — para reaproveitar discoverFeeds num teste, por
+ * exemplo — dispara o probe inteiro contra as 25 fontes reais como efeito
+ * colateral. Aconteceu.
+ */
+async function main() {
+  const doc = JSON.parse(await readFile(SOURCES_PATH, 'utf8'));
+  const rows = [];
 
-for (const source of doc.sources) {
-  if (source.ingest.method === 'manual') {
-    rows.push({ fonte: source.id, tentativas: 0, resultado: 'pulado (manual)', metodo: 'manual', itens: '', '993?': '' });
-    continue;
+  for (const source of doc.sources) {
+    if (source.ingest.method === 'manual') {
+      rows.push({ fonte: source.id, tentativas: 0, resultado: 'pulado (manual)', metodo: 'manual', itens: '', '993?': '' });
+      continue;
+    }
+
+    const urls = candidatesFor(source);
+    const attempts = [];
+    process.stderr.write(`  ${source.id} … `);
+
+    const queue = [...urls];
+    const seen = new Set();
+    let discovered = 0;
+
+    while (queue.length) {
+      const url = queue.shift();
+      if (seen.has(url)) continue;
+      seen.add(url);
+
+      const result = await probe(url);
+      const { body, ...record } = result;
+      attempts.push(record);
+
+      // Achou algo utilizável: não precisa insistir nas outras candidatas.
+      if (isUsableFeed(result) || isJsonApi(result)) break;
+
+      // HTML: deixe a própria página dizer onde está o feed, em vez de adivinhar.
+      if (result.ok && body && discovered < 3 && /html/i.test(result.contentType ?? '')) {
+        const links = discoverFeeds(body, url, 3 - discovered);
+        for (const link of links) {
+          if (seen.has(link)) continue;
+          discovered += 1;
+          record.discovered_feed = true;
+          queue.push(link);
+        }
+      }
+
+      if (queue.length) await sleep(PAUSE_MS);
+    }
+
+    const verdict = verdictFor(attempts);
+    process.stderr.write(`${verdict.method}\n`);
+
+    source.ingest.method = verdict.method;
+    source.ingest.verified = verdict.verified;
+    source.ingest.reason = verdict.reason;
+    source.ingest.probed_at = new Date().toISOString();
+    source.ingest.probe_url = verdict.url;
+    source.ingest.covers_model = winnerCoversModel(attempts, verdict);
+    source.ingest.probe_attempts = attempts.map((a) => ({
+      url: a.url,
+      status: a.status,
+      ...(a.error ? { error: a.error } : {}),
+      ...(a.isFeed ? { items: a.itemCount } : {}),
+    }));
+
+    const winner = attempts.find((a) => a.url === verdict.url) ?? attempts.at(-1) ?? {};
+    rows.push({
+      fonte: source.id,
+      tentativas: attempts.length,
+      resultado: winner.ok ? `HTTP ${winner.status}` : (winner.error ?? `HTTP ${winner.status}`),
+      metodo: verdict.method,
+      itens: winner.itemCount ?? '',
+      '993?': winner.mentions993 === undefined ? '' : winner.mentions993 ? 'sim' : 'nao',
+    });
+
+    await sleep(PAUSE_MS);
   }
 
-  const urls = candidatesFor(source);
-  const attempts = [];
-  process.stderr.write(`  ${source.id} … `);
+  console.table(rows);
 
-  for (const url of urls) {
-    const result = await probe(url);
-    attempts.push(result);
-    // Achou algo utilizável: não precisa insistir nas outras candidatas.
-    if (isUsableFeed(result) || isJsonApi(result)) break;
-    if (urls.length > 1) await sleep(PAUSE_MS);
+  const byMethod = (m) => doc.sources.filter((s) => s.ingest.method === m).length;
+  const usable = doc.sources.filter((s) => ['rss', 'json_api'].includes(s.ingest.method));
+
+  console.log(`\n${doc.sources.filter((s) => s.ingest.verified).length}/${doc.sources.length} fontes verificadas.`);
+  console.log(`Com feed/API utilizável: ${usable.length} — ${usable.map((s) => s.id).join(', ') || 'nenhuma'}`);
+
+  const covering = usable.filter((s) => s.ingest.covers_model !== false);
+  const notCovering = usable.filter((s) => s.ingest.covers_model === false);
+  console.log(`  destes, cobrindo o recorte 993: ${covering.length} — ${covering.map((s) => s.id).join(', ') || 'nenhuma'}`);
+  if (notCovering.length) {
+    console.log(
+      `  feed valido mas SEM 993 na janela atual: ${notCovering.map((s) => s.id).join(', ')}` +
+        `\n  (formato ok, cobertura nao — um feed geral do site pode nunca trazer o modelo)`,
+    );
+  }
+  console.log(`scrape: ${byMethod('scrape')} · manual: ${byMethod('manual')} · sem rota: ${byMethod('unknown')}`);
+
+  const blocked = doc.sources.filter((s) => (s.ingest.reason ?? '').includes('recusado'));
+  if (blocked.length) {
+    console.log(
+      `\n${blocked.length} fonte(s) bloqueiam acesso automatizado: ${blocked.map((s) => s.id).join(', ')}.` +
+        `\nNão contorne o bloqueio. Procure feed/API oficial; se não houver, deixe como manual.`,
+    );
   }
 
-  const verdict = verdictFor(attempts);
-  process.stderr.write(`${verdict.method}\n`);
-
-  source.ingest.method = verdict.method;
-  source.ingest.verified = verdict.verified;
-  source.ingest.reason = verdict.reason;
-  source.ingest.probed_at = new Date().toISOString();
-  source.ingest.probe_url = verdict.url;
-  source.ingest.probe_attempts = attempts.map((a) => ({
-    url: a.url,
-    status: a.status,
-    ...(a.error ? { error: a.error } : {}),
-    ...(a.isFeed ? { items: a.itemCount } : {}),
-  }));
-
-  const winner = attempts.find((a) => a.url === verdict.url) ?? attempts.at(-1) ?? {};
-  rows.push({
-    fonte: source.id,
-    tentativas: attempts.length,
-    resultado: winner.ok ? `HTTP ${winner.status}` : (winner.error ?? `HTTP ${winner.status}`),
-    metodo: verdict.method,
-    itens: winner.itemCount ?? '',
-    '993?': winner.mentions993 === undefined ? '' : winner.mentions993 ? 'sim' : 'nao',
-  });
-
-  await sleep(PAUSE_MS);
+  if (write) {
+    doc.probed_at = new Date().toISOString();
+    await writeFile(SOURCES_PATH, JSON.stringify(doc, null, 2) + '\n');
+    console.log(`\n${SOURCES_PATH} atualizado.`);
+  } else {
+    console.log('\n(dry-run — rode com --write para gravar)');
+  }
 }
 
-console.table(rows);
+const invokedDirectly =
+  process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
-const byMethod = (m) => doc.sources.filter((s) => s.ingest.method === m).length;
-const usable = doc.sources.filter((s) => ['rss', 'json_api'].includes(s.ingest.method));
-
-console.log(`\n${doc.sources.filter((s) => s.ingest.verified).length}/${doc.sources.length} fontes verificadas.`);
-console.log(`Automatizáveis por feed/API: ${usable.length} — ${usable.map((s) => s.id).join(', ') || 'nenhuma'}`);
-console.log(`scrape: ${byMethod('scrape')} · manual: ${byMethod('manual')} · sem rota: ${byMethod('unknown')}`);
-
-const blocked = doc.sources.filter((s) => (s.ingest.reason ?? '').includes('recusado'));
-if (blocked.length) {
-  console.log(
-    `\n${blocked.length} fonte(s) bloqueiam acesso automatizado: ${blocked.map((s) => s.id).join(', ')}.` +
-      `\nNão contorne o bloqueio. Procure feed/API oficial; se não houver, deixe como manual.`,
-  );
-}
-
-if (write) {
-  doc.probed_at = new Date().toISOString();
-  await writeFile(SOURCES_PATH, JSON.stringify(doc, null, 2) + '\n');
-  console.log(`\n${SOURCES_PATH} atualizado.`);
-} else {
-  console.log('\n(dry-run — rode com --write para gravar)');
-}
+if (invokedDirectly) await main();
