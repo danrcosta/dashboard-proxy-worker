@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "schema_version": "6.0",
+    "generated_at": "2026-08-19T01:16:47.460Z",
+    "generator": "Hermes Pessoal (daily-digest-script)",
+    "seed": false,
+    "edition_date": "2026-08-19",
+    "exchange_rate": {
+      "rate": 5.19,
+      "source": "xe.com",
+      "fetched_at": "2026-08-19T01:16:47.460Z",
+      "stale": false
+    }
+  },
+  "lead": {
+    "kicker": "Daily Digest — 2026-08-19",
+    "headline": "Porsche 993 Market Snapshot - 2026-08-19",
+    "standfirst": "Monitoramento diário do mercado 993 air-cooled",
+    "body": [
+      "Digest automático gerado pelo Hermes Pessoal."
+    ]
+  },
+  "market": {
+    "live": [],
+    "sold": []
+  },
+  "newsroom": {
+    "articles": []
+  },
+  "valuation": {
+    "models": [
+      {
+        "id": "c4s",
+        "label": "Carrera 4S",
+        "median_usd": 162000,
+        "trend_yoy": 0.045
+      },
+      {
+        "id": "carrera",
+        "label": "Carrera (base)",
+        "median_usd": 142000,
+        "trend_yoy": 0.025
+      },
+      {
+        "id": "turbo",
+        "label": "Turbo 3.6",
+        "median_usd": 288000,
+        "trend_yoy": 0.055
+      }
+    ]
+  }
+}

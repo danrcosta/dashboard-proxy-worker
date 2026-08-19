@@ -1,0 +1,316 @@
+{
+  "$schema_version": "5.0",
+  "description": "Definicao de maquina das 3 personas Porsche. Cada persona e uma LENTE que decide fontes, filtros, metricas e ranqueamento — nao um card decorativo. O campo 'scoring' e consumido por tools/score-listing.mjs.",
+  "scale": "Todos os scores sao 0-100. 'weight' de cada criterio soma 1.0 dentro da persona.",
+
+  "personas": [
+    {
+      "id": "piloto",
+      "label_pt": "O Piloto",
+      "label_en": "The Driver",
+      "label_de": "Der Fahrer",
+      "badge_color": "#27ae60",
+      "thesis": "O carro existe para ser dirigido. Quilometragem e curriculo, nao demerito. Um 993 que roda 8.000 km/ano esta mais saudavel que um com 900 km/ano.",
+      "buys_for": "Uso real: estrada, serra, track day ocasional, encontros com deslocamento.",
+      "ignores": "Originalidade de etiqueta, numero de donos, premio por cor rara.",
+
+      "vocabulary": [
+        "driver-quality", "sorted", "usable patina", "sympathetic upgrades",
+        "no-stories car", "service history acima de matching numbers",
+        "backdate leve", "shift kit", "Bilstein / Ohlins", "RS bar"
+      ],
+
+      "values": [
+        "Historico de manutencao completo e recente",
+        "Suspensao, freios e refrigeracao revisados",
+        "Correcoes conhecidas do 993 ja feitas (ver known_issues)",
+        "Bancos e ergonomia para 400 km sem dor",
+        "Mods reversiveis que melhoram dirigibilidade"
+      ],
+
+      "red_flags": [
+        "Parado > 24 meses (vedacoes, embreagem, tanque, freios)",
+        "Service book vazio ou 'perdido na mudanca'",
+        "Anuncio que vende quilometragem baixa como argumento principal",
+        "Pneus com mais de 6 anos de DOT em carro caro",
+        "'Garage queen', 'never seen rain', 'delivery miles'"
+      ],
+
+      "kpis": [
+        { "id": "km_por_ano", "label": "km rodados por ano", "good": ">= 3000" },
+        { "id": "custo_km", "label": "Custo estimado por km rodado", "unit": "BRL/km" },
+        { "id": "meses_ultima_revisao", "label": "Meses desde a ultima revisao", "good": "<= 12" },
+        { "id": "idade_pneus", "label": "Idade dos pneus (DOT)", "good": "<= 5 anos" }
+      ],
+
+      "source_bias": [
+        "autofarm", "paul_stephens", "export56", "pcarmarket",
+        "collecting_cars", "elferspot"
+      ],
+
+      "video_queries": [
+        "993 Carrera 4S onboard mountain road",
+        "air-cooled 911 road trip 993",
+        "993 suspension setup Bilstein",
+        "993 valve adjustment DIY",
+        "911 993 brake upgrade street"
+      ],
+
+      "parts_focus": ["consumiveis", "fluidos", "freios", "suspensao", "pneus", "embreagem"],
+
+      "scoring": {
+        "criteria": [
+          {
+            "id": "service_history",
+            "weight": 0.30,
+            "map": { "none": 0, "partial": 40, "full": 85, "full_opc": 100 }
+          },
+          {
+            "id": "mechanical_freshness",
+            "weight": 0.20,
+            "note": "Servicos maiores recentes: top-end, embreagem, corrente/guias, radiadores de oleo.",
+            "map": { "unknown": 20, "overdue": 0, "due_soon": 45, "fresh": 100 }
+          },
+          {
+            "id": "price_vs_index",
+            "weight": 0.25,
+            "note": "Percentual abaixo/acima do indice do modelo. -20% => 100, +20% => 0.",
+            "curve": "linear_inverse", "min": -0.20, "max": 0.20
+          },
+          {
+            "id": "usability_mods",
+            "weight": 0.15,
+            "note": "Mods que ajudam quem dirige pontuam; mods de exposicao penalizam.",
+            "map": { "show_only": 10, "none": 55, "tasteful_driver": 100, "heavy_track": 70 }
+          },
+          {
+            "id": "mileage_sweet_spot",
+            "weight": 0.10,
+            "note": "Faixa ideal de uso saudavel, em km.",
+            "curve": "plateau", "ideal_min": 60000, "ideal_max": 160000,
+            "floor_penalty_below": 25000
+          }
+        ],
+        "penalties": [
+          { "id": "dormant_over_24m", "points": -20, "reason": "Parado ha mais de 24 meses" },
+          { "id": "no_service_records", "points": -15, "reason": "Sem qualquer comprovacao de manutencao" }
+        ]
+      }
+    },
+
+    {
+      "id": "colecionador",
+      "label_pt": "O Colecionador",
+      "label_en": "The Collector",
+      "label_de": "Der Sammler",
+      "badge_color": "#d4af37",
+      "thesis": "O carro e um documento historico. Cada desvio do estado de fabrica custa dinheiro — e alguns sao irreversiveis.",
+      "buys_for": "Preservacao e apreciacao patrimonial. O uso e cerimonial.",
+      "ignores": "Ganho de performance, conveniencia moderna, custo de oportunidade de uso.",
+
+      "vocabulary": [
+        "matching numbers", "Kardex", "COA (Certificate of Authenticity)",
+        "option codes / M-codes", "one owner from new", "books, tools and jack",
+        "paint meter readings", "unmolested", "PTS (paint to sample)",
+        "delivery mileage", "concours"
+      ],
+
+      "values": [
+        "Kardex Porsche batendo com o carro fisico",
+        "Motor e cambio de numero original",
+        "Pintura original com leitura de espessura documentada",
+        "Manual, ferramentas, macaco, compressor e chaves originais",
+        "Cadeia de donos curta e rastreavel",
+        "Cor rara de fabrica (nao repintada)"
+      ],
+
+      "red_flags": [
+        "Repintura nao declarada / leitura de espessura ausente",
+        "Motor 'rebuilt to 3.8' — descaracterizacao irreversivel",
+        "Painel de instrumentos trocado (quilometragem nao comprovavel)",
+        "'Restomod', 'backdate', 'RSR flares' na descricao",
+        "Historico com lacuna de mais de 5 anos"
+      ],
+
+      "kpis": [
+        { "id": "km_totais", "label": "Quilometragem total", "good": "quanto menor, melhor" },
+        { "id": "n_donos", "label": "Numero de donos", "good": "<= 3" },
+        { "id": "pct_original", "label": "% de originalidade estimada", "good": ">= 95%" },
+        { "id": "premio_cor", "label": "Premio de cor rara vs cor comum", "unit": "%" },
+        { "id": "spread_indice", "label": "Spread vs indice do modelo", "unit": "%" }
+      ],
+
+      "source_bias": [
+        "bring_a_trailer", "canepa", "european_collectibles", "early911s",
+        "hexagon_classics", "classic_driver", "porsche_classic_partners", "pca_mart"
+      ],
+
+      "notes_on_sources": "Em BaT o valor esta nos COMENTARIOS, nao no anuncio: e onde especialistas apontam repintura, paineis trocados e historico inconsistente. O ingestor deve capturar os comentarios sinalizados.",
+
+      "video_queries": [
+        "993 Carrera 4S restoration documentary",
+        "Porsche 993 rare color originality walkaround",
+        "Porsche Kardex explained",
+        "993 production history air-cooled last",
+        "Porsche classic factory restoration 993"
+      ],
+
+      "parts_focus": ["pecas_originais_nos", "porsche_classic", "etiquetas_e_selos", "ferramentas_de_bordo"],
+
+      "scoring": {
+        "criteria": [
+          {
+            "id": "originality",
+            "weight": 0.30,
+            "note": "Matching numbers + ausencia de repintura + interior original.",
+            "map": { "modified": 0, "partial": 45, "original_repainted": 70, "fully_original": 100 }
+          },
+          {
+            "id": "documentation",
+            "weight": 0.25,
+            "note": "Kardex, COA, livros, ferramentas, notas fiscais.",
+            "map": { "none": 0, "partial": 40, "good": 75, "complete": 100 }
+          },
+          {
+            "id": "mileage_low",
+            "weight": 0.20,
+            "note": "Inverso: menos km, mais score. 0 km => 100, 200.000 km => 0.",
+            "curve": "linear_inverse", "min": 0, "max": 200000
+          },
+          {
+            "id": "color_rarity",
+            "weight": 0.15,
+            "map": { "standard": 40, "desirable": 70, "rare": 90, "pts": 100 }
+          },
+          {
+            "id": "owners",
+            "weight": 0.10,
+            "curve": "linear_inverse", "min": 1, "max": 8
+          }
+        ],
+        "penalties": [
+          { "id": "irreversible_mod", "cap": 40, "reason": "Mod irreversivel limita o score a 40" },
+          { "id": "undisclosed_repaint", "points": -25, "reason": "Repintura sem documentacao" },
+          { "id": "cluster_swap", "points": -20, "reason": "Painel trocado" }
+        ]
+      }
+    },
+
+    {
+      "id": "construtor",
+      "label_pt": "O Construtor",
+      "label_en": "The Builder",
+      "label_de": "Der Umbauer",
+      "badge_color": "#e74c3c",
+      "thesis": "O 993 e uma plataforma, nao um relicario. O valor nao esta no que saiu de fabrica — esta na qualidade e na coerencia da execucao.",
+      "buys_for": "Transformar. Ou comprar pronto um build cuja assinatura respeita.",
+      "ignores": "Matching numbers, premio por cor de fabrica, contagem de donos.",
+
+      "vocabulary": [
+        "backdate", "hot rod", "RS-spec", "restomod", "singer-style",
+        "3.6 para 3.8 stroker", "RSR flares", "ITB", "carbono seco",
+        "builder pedigree", "dyno sheet", "peso final"
+      ],
+
+      "values": [
+        "Coerencia do conceito (nao um catalogo de pecas soltas)",
+        "Quem construiu — a assinatura do builder e o ativo",
+        "Documentacao completa do build: notas, dyno, fotos do processo",
+        "Relacao potencia/peso e nao potencia absoluta",
+        "Reversibilidade quando a peca-base e rara"
+      ],
+
+      "red_flags": [
+        "Build inacabado vendido como 'so faltam detalhes'",
+        "Sem dyno e sem notas fiscais do motor",
+        "Pecas orfas (fabricante fora de operacao, sem reposicao)",
+        "Solda de alargamento mal executada / gaps irregulares",
+        "Builder anonimo em carro com preco de builder famoso"
+      ],
+
+      "kpis": [
+        { "id": "potencia_peso", "label": "Potencia / peso", "unit": "hp/ton" },
+        { "id": "peso_final", "label": "Peso final aferido", "unit": "kg" },
+        { "id": "custo_build", "label": "Custo do build documentado", "unit": "USD" },
+        { "id": "builder", "label": "Builder responsavel" },
+        { "id": "premio_builder", "label": "Premio do builder vs base equivalente", "unit": "%" }
+      ],
+
+      "source_bias": [
+        "schaltkulisse", "sloan_motor_cars", "collecting_cars",
+        "pcarmarket", "elferspot", "classic_driver"
+      ],
+
+      "builders_to_track": [
+        "Gunther Werks", "RUF", "DP Motorsport", "Rothsport Racing",
+        "Sharkwerks", "Bisimoto", "Kalmar", "Theon Design (base 964)",
+        "Paul Stephens Autoart", "Tuthill"
+      ],
+
+      "video_queries": [
+        "993 backdate build process",
+        "993 3.8 stroker engine build dyno",
+        "Gunther Werks 993 walkthrough",
+        "993 RSR widebody fabrication",
+        "air-cooled 911 restomod finished showcase"
+      ],
+
+      "parts_focus": ["motor_e_admissao", "escape", "suspensao_coilover", "aero_e_carroceria", "leves_carbono_lexan"],
+
+      "scoring": {
+        "criteria": [
+          {
+            "id": "build_coherence",
+            "weight": 0.35,
+            "note": "O conceito e legivel e executado inteiro?",
+            "map": { "parts_bin": 0, "inconsistent": 35, "coherent": 80, "exemplary": 100 }
+          },
+          {
+            "id": "builder_pedigree",
+            "weight": 0.25,
+            "map": { "unknown": 20, "local_shop": 50, "recognized": 85, "marquee": 100 }
+          },
+          {
+            "id": "build_documentation",
+            "weight": 0.15,
+            "note": "Dyno, notas fiscais, fotos de processo.",
+            "map": { "none": 0, "photos_only": 35, "invoices": 70, "full_dossier": 100 }
+          },
+          {
+            "id": "power_to_weight",
+            "weight": 0.15,
+            "note": "hp por tonelada. 200 => 0, 400 => 100.",
+            "curve": "linear", "min": 200, "max": 400
+          },
+          {
+            "id": "price_vs_index",
+            "weight": 0.10,
+            "curve": "linear_inverse", "min": -0.20, "max": 0.20
+          }
+        ],
+        "penalties": [
+          { "id": "unfinished_build", "points": -30, "reason": "Build inacabado" },
+          { "id": "orphan_parts", "points": -15, "reason": "Pecas sem reposicao disponivel" },
+          {
+            "id": "too_good_to_cut",
+            "points": -15,
+            "reason": "Carro original de baixa km: cortar destroi valor e desagrada a comunidade"
+          }
+        ]
+      }
+    }
+  ],
+
+  "blend": {
+    "note": "O digest e ranqueado por uma MISTURA das tres lentes, nao por uma so. Ajustavel no digest (sliders) e via Telegram (/perfil).",
+    "default_weights": { "piloto": 0.50, "colecionador": 0.35, "construtor": 0.15 },
+    "rationale": "Perfil de proprietario de 993 C4S que dirige o carro, respeita a originalidade e observa o cenario de builds sem pretender construir um.",
+    "formula": "score_final = sum(peso_persona * score_persona) para cada anuncio",
+    "presets": {
+      "equilibrado": { "piloto": 0.34, "colecionador": 0.33, "construtor": 0.33 },
+      "so_dirigir": { "piloto": 1.0, "colecionador": 0.0, "construtor": 0.0 },
+      "so_investir": { "piloto": 0.1, "colecionador": 0.9, "construtor": 0.0 },
+      "so_construir": { "piloto": 0.2, "colecionador": 0.0, "construtor": 0.8 }
+    }
+  }
+}

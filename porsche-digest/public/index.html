@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Porsche Digest — 993 Carrera 4S</title>
+    <meta
+      name="description"
+      content="Jornal diário sobre o Porsche 911 (993) Carrera 4S: arquivo, mercado, oficina e estrada, lidos por três lentes."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="./assets/digest.css" />
+  </head>
+  <body>
+    <!-- Masthead editorial: o cabeçalho é a capa, não uma barra de navegação. -->
+    <header class="masthead">
+      <div class="wrap">
+        <div class="masthead-top">
+          <span class="label" id="edition">—</span>
+          <button class="theme-toggle" id="theme-toggle" type="button">tema</button>
+        </div>
+        <h1>
+          Porsche Digest
+          <span class="h1-sub">911 (993) Carrera 4S</span>
+        </h1>
+        <div class="masthead-rule">
+          <span class="label" id="strap">O último refrigerado a ar</span>
+          <span class="label" id="fx">—</span>
+        </div>
+      </div>
+    </header>
+
+    <div id="seed-banner" hidden class="seed-banner">
+      <div class="wrap"><b>DADOS DE EXEMPLO</b> — <span id="seed-msg"></span></div>
+    </div>
+
+    <main>
+      <!-- Abertura: um argumento por edição. Tudo abaixo se subordina a ele. -->
+      <div class="wrap">
+        <article class="lead" id="lead"></article>
+      </div>
+
+      <div class="wrap">
+        <!-- 01 — Em pauta: o noticiário, compacto. Não compete com a matéria de capa. -->
+        <section id="pauta">
+          <div class="sec-head">
+            <span class="sec-num">01</span>
+            <div>
+              <h2>Em pauta</h2>
+              <p class="dek">O que as publicações de referência trouxeram desde a última edição.</p>
+            </div>
+          </div>
+          <div id="news"></div>
+        </section>
+
+        <!-- 02 — O Arquivo: o capítulo rotativo que dá lastro histórico ao dia. -->
+        <section id="arquivo">
+          <div class="sec-head">
+            <span class="sec-num">02</span>
+            <div>
+              <h2>O Arquivo</h2>
+              <p class="dek">
+                Um capítulo por edição sobre o 993 — engenharia, desenho, mercado e o que
+                explica o lugar deste carro. Roda diariamente.
+              </p>
+            </div>
+          </div>
+          <div class="dossier" id="dossier"></div>
+        </section>
+
+        <!-- 03 — As lentes: a chave de leitura vem antes do que ela filtra. -->
+        <section id="lentes">
+          <div class="sec-head">
+            <span class="sec-num">03</span>
+            <div>
+              <h2>As três lentes</h2>
+              <p class="dek">
+                O mesmo carro vale coisas diferentes conforme quem olha. Cada lente decide
+                quais sinais importam e o que é defeito — e reordena o mercado abaixo.
+              </p>
+            </div>
+          </div>
+          <div class="lenses" id="lenses"></div>
+        </section>
+
+        <!-- 04 — O Mercado: intelligence com julgamento editorial por anúncio. -->
+        <section id="mercado">
+          <div class="sec-head">
+            <span class="sec-num">04</span>
+            <div>
+              <h2>O Mercado</h2>
+              <p class="dek" id="market-dek">
+                993 Carrera 4S à venda, ordenados pela sua mistura de lentes.
+              </p>
+            </div>
+          </div>
+
+          <div class="blend">
+            <div class="blend-head">
+              <span class="label">Sua mistura</span>
+              <span class="now" id="blend-summary"></span>
+            </div>
+            <div class="sliders" id="sliders"></div>
+            <div class="presets" id="presets"></div>
+          </div>
+
+          <div id="listings"></div>
+
+          <div class="sold-list">
+            <h3>Negócios fechados</h3>
+            <div id="sold"></div>
+          </div>
+        </section>
+
+        <!-- 05 — O Índice. -->
+        <section id="indice">
+          <div class="sec-head">
+            <span class="sec-num">05</span>
+            <div>
+              <h2>O Índice</h2>
+              <p class="dek" id="index-dek"></p>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <div id="chart"></div>
+            <div class="chart-legend" id="chart-legend"></div>
+          </div>
+          <div class="models" id="models"></div>
+        </section>
+
+        <!-- 06 — A Oficina: peças e manutenção juntas, porque a pergunta é uma só. -->
+        <section id="oficina">
+          <div class="sec-head">
+            <span class="sec-num">06</span>
+            <div>
+              <h2>A Oficina</h2>
+              <p class="dek">
+                Onde comprar peça e o que olhar no carro. O roteiro de inspeção é o mesmo
+                que a lente do Piloto usa para pontuar.
+              </p>
+            </div>
+          </div>
+          <div class="cols-2">
+            <div>
+              <h4 class="label">Fornecedores</h4>
+              <div class="cols-3" id="suppliers" style="margin-top: 1rem"></div>
+            </div>
+            <div>
+              <h4 class="label">Roteiro de inspeção — 993</h4>
+              <ul class="checklist" id="inspection" style="margin-top: 1rem"></ul>
+              <p class="aside caveat" id="inspection-caveat" style="margin-top: 0.9rem"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 07 — A Estrada. -->
+        <section id="estrada">
+          <div class="sec-head">
+            <span class="sec-num">07</span>
+            <div>
+              <h2>A Estrada</h2>
+              <p class="dek" id="road-dek"></p>
+            </div>
+          </div>
+          <div class="cols-3" id="watch"></div>
+        </section>
+
+        <!-- 08 — O Carro. -->
+        <section id="carro">
+          <div class="sec-head">
+            <span class="sec-num">08</span>
+            <div>
+              <h2>O Carro</h2>
+              <p class="dek">
+                A ficha do seu exemplar. Campo sem confirmação aparece como pendência —
+                nunca preenchido por suposição.
+              </p>
+            </div>
+          </div>
+          <div class="cols-2" id="car"></div>
+        </section>
+
+        <!-- 09 — A Biblioteca: o benchmark editorial, visível e verificável. -->
+        <section id="biblioteca">
+          <div class="sec-head">
+            <span class="sec-num">09</span>
+            <div>
+              <h2>A Biblioteca</h2>
+              <p class="dek" id="library-dek"></p>
+            </div>
+          </div>
+          <div class="lib" id="library"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p class="colophon" id="colophon"></p>
+        <p id="sources-line"></p>
+      </div>
+    </footer>
+
+    <script type="module" src="./assets/digest.js"></script>
+    <noscript>
+      <div class="wrap" style="padding: 3rem 1.5rem">
+        Este digest monta o conteúdo a partir de <code>data/*.json</code>. Habilite
+        JavaScript, ou leia os JSON diretamente em <code>/data/</code>.
+      </div>
+    </noscript>
+  </body>
+</html>

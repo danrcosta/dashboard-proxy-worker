@@ -1,0 +1,152 @@
+{
+  "$schema_version": "6.0",
+  "description": "O Arquivo — capítulos editoriais sobre o 993. Um por dia, em rotação determinística pela data (mesmo dia = mesmo capítulo, para todos que abrirem o link). Substitui a antiga seção '911 Turbo S 2026'.",
+
+  "why": "Um digest que só mostra o que mudou hoje é um feed. O que o transforma em jornal é ter um argumento por edição — algo que valha ler mesmo num dia sem anúncio novo. Estes capítulos são escritos uma vez e rodam; o dado do dia é que muda em volta deles.",
+
+  "editorial_note": "O texto abaixo é prosa editorial, não ficha técnica. Os números aparecem em `key_facts` e os que merecem conferência contra fonte primária estão em `fact_check`. Antes de tratar qualquer cifra daqui como definitiva, confirmar contra literatura de fábrica, Kardex ou Porsche ORIGINALE.",
+
+  "rotation": "index = dia-do-ano % número de capítulos",
+
+  "chapters": [
+    {
+      "id": "o-ultimo",
+      "kicker": "1994 – 1998",
+      "title": "O último",
+      "standfirst": "O 993 não é o melhor 911 refrigerado a ar por consenso técnico. É o último — e no mercado de colecionáveis isso é uma categoria em si.",
+      "body": [
+        "Toda linhagem industrial tem um encerramento, e quase nunca ele é planejado como tal. O 993 foi projetado para ser mais um 911: mais rígido, mais civilizado, mais vendável. Só depois, quando o 996 chegou com refrigeração líquida e faróis que dividiram a base, é que a geração anterior virou fronteira.",
+        "Isso muda o que se está comprando. Um 993 não é avaliado apenas pelo que faz na estrada — é avaliado por encerrar 35 anos de uma solução de engenharia que a indústria abandonou. O prêmio que ele carrega sobre o 964 não é proporcional à diferença mecânica entre os dois. É proporcional ao fato de que depois dele não veio outro.",
+        "Vale entender essa distinção antes de olhar qualquer tabela de preços. Boa parte do valor de um air-cooled tardio é narrativa, não métrica — e narrativa se move por motivos diferentes dos que movem torque e quilometragem."
+      ],
+      "key_facts": [
+        "Última geração 911 com motor refrigerado a ar",
+        "Sucedido pelo 996, de refrigeração líquida",
+        "Desenho externo de Tony Hatter"
+      ],
+      "fact_check": ["Anos exatos de produção e de model year variam por mercado — confirmar para o recorte 1996–1998 usado no digest."],
+      "further_reading": ["000_magazine", "porsche_originale", "stuttcars"],
+      "personas": ["colecionador", "piloto", "construtor"]
+    },
+
+    {
+      "id": "eixo-traseiro",
+      "kicker": "Engenharia",
+      "title": "O eixo que domesticou o 911",
+      "standfirst": "A mudança mais importante do 993 não está na carroceria. Está embaixo dela.",
+      "body": [
+        "Até o 964, o 911 carregava uma reputação incômoda: rápido nas mãos certas, traiçoeiro nas erradas. A massa atrás do eixo traseiro e uma suspensão de braços arrastados produziam um carro que punia erro de tempo com uma sequência que o motorista médio não tinha como corrigir.",
+        "O 993 trouxe um eixo traseiro multibraço — batizado internamente LSA — e com ele um comportamento que se tornou legível. O carro passou a avisar antes de agir. Não virou neutro, e nem deveria: continuou sendo um 911, com a mesma física peculiar. Mas deixou de ser um teste de reflexo.",
+        "Para quem dirige, essa é a razão prática de o 993 ser um air-cooled utilizável em estrada moderna. Para quem coleciona, é a razão de ele marcar o ponto em que o 911 virou um carro que se pode recomendar sem ressalva."
+      ],
+      "key_facts": [
+        "Eixo traseiro multibraço, novo em relação ao 964",
+        "Braços dianteiros em alumínio",
+        "Ganho principal: previsibilidade em transferência de carga"
+      ],
+      "fact_check": ["A designação interna da suspensão e a composição exata dos braços merecem confirmação em literatura técnica de fábrica."],
+      "further_reading": ["octane", "stuttcars", "9werks"],
+      "personas": ["piloto", "construtor"]
+    },
+
+    {
+      "id": "carroceria-larga",
+      "kicker": "O 4S",
+      "title": "A carroceria emprestada",
+      "standfirst": "Corpo do Turbo, freios do Turbo, motor aspirado. O 4S é a variante que mais divide a comunidade — e a divisão é o ponto.",
+      "body": [
+        "O Carrera 4S pega a carroceria alargada do Turbo, sua suspensão e seus freios, e instala ali o motor aspirado. O resultado é um carro que parece o topo da linha sem entregar o desempenho do topo da linha — e é exatamente por isso que ele existe.",
+        "A leitura depende inteiramente da lente. Para o Piloto, é a melhor combinação da geração: a presença e a pegada do Turbo, com a entrega linear e a manutenção mais simples de um aspirado. Para o Colecionador, é uma variante de produção limitada com apelo estético próprio. Para uma parte da comunidade mais purista, é um carro que sinaliza mais do que cumpre.",
+        "Nenhuma dessas leituras é errada, e é útil saber qual delas está precificando o carro que você está olhando. O prêmio do 4S sobre um Carrera 2 equivalente não é um número técnico — é o preço da carroceria larga."
+      ],
+      "key_facts": [
+        "Produzido entre 1996 e 1998",
+        "Carroceria, freios e suspensão derivados do 993 Turbo",
+        "Motor aspirado, tração integral"
+      ],
+      "fact_check": ["Volumes de produção por ano-modelo e diferenças de especificação entre mercados — confirmar antes de usar como argumento de raridade."],
+      "further_reading": ["hagerty", "flatsixes", "stuttcars"],
+      "personas": ["colecionador", "piloto"]
+    },
+
+    {
+      "id": "varioram",
+      "kicker": "Admissão",
+      "title": "VarioRam, ou como ganhar torque sem ganhar cilindrada",
+      "standfirst": "A atualização de 1996 mudou menos o número de pico do que a forma da curva — e é a curva que se sente.",
+      "body": [
+        "A admissão de geometria variável entrou na linha Carrera no ano-modelo 1996. O ganho de potência de pico foi modesto e é o número que sempre aparece nos anúncios. O ganho relevante está em outro lugar: no enchimento em rotações médias, a faixa onde o carro efetivamente vive numa estrada real.",
+        "Isso tem consequência direta na leitura de mercado. Um 993 pré-VarioRam e um pós-VarioRam são carros de caráter diferente, e a diferença aparece mais na condução do que na ficha. Anúncios raramente explicam isso; a data do ano-modelo é o que denuncia.",
+        "Há também uma consequência de manutenção: o sistema tem partes móveis e mangueiras que envelhecem. Vale ouvir o carro em rotação média antes de aceitar qualquer história sobre a saúde do motor."
+      ],
+      "key_facts": [
+        "Introduzido na linha Carrera a partir do ano-modelo 1996",
+        "Efeito principal: torque em rotação média, não potência de pico",
+        "Item de inspeção: mangueiras e atuação do sistema"
+      ],
+      "fact_check": ["Valores de potência antes e depois do VarioRam variam conforme mercado e norma de medição — confirmar antes de publicar cifra."],
+      "further_reading": ["stuttcars", "octane", "flatsixes"],
+      "personas": ["piloto", "construtor"]
+    },
+
+    {
+      "id": "o-desenho",
+      "kicker": "Design",
+      "title": "Os faróis que fecharam o círculo",
+      "standfirst": "O 993 é o último 911 a manter a silhueta original reconhecível sem citação. Depois dele, o desenho passou a se referir ao passado em vez de continuá-lo.",
+      "body": [
+        "O desenho do 993 resolveu um problema difícil: modernizar uma forma de 1963 sem transformá-la em homenagem. Os faróis inclinados, os paralamas mais cheios e a traseira mais larga atualizaram o carro sem que ele deixasse de ser lido instantaneamente como 911.",
+        "É um trabalho de continuidade, não de ruptura — e essa é a distinção que interessa a quem estuda design automotivo. O 996 fez o movimento oposto: rompeu, e depois passou duas gerações reconstruindo a referência que havia abandonado.",
+        "Por isso o 993 aparece com tanta frequência em publicações que tratam carro como objeto de design, e não como produto. Ele é o último ponto da linha em que a forma ainda era herdada em vez de citada."
+      ],
+      "key_facts": [
+        "Desenho externo atribuído a Tony Hatter",
+        "Faróis inclinados integrados ao paralama",
+        "Última geração antes da ruptura formal do 996"
+      ],
+      "fact_check": [],
+      "further_reading": ["type7", "000_magazine", "road_rat"],
+      "personas": ["colecionador", "construtor", "piloto"]
+    },
+
+    {
+      "id": "as-cores",
+      "kicker": "Mercado",
+      "title": "Por que a cor move o preço",
+      "standfirst": "Em air-cooled, a cor não é preferência — é atributo de raridade, e se comporta como tal na tabela.",
+      "body": [
+        "Cores de fábrica pouco pedidas na época viraram, três décadas depois, o item mais difícil de encontrar. Riviera Blue, Amethyst e tons de encomenda especial saem de linha na estatística de produção e entram na estatística de colecionismo — onde escassez precifica.",
+        "O detalhe que separa o prêmio real do prêmio aparente é a documentação. Uma cor rara original vale substancialmente mais do que a mesma cor aplicada depois, e a diferença entre as duas está numa leitura de espessura de pintura e num Kardex, não numa foto.",
+        "É por isso que a lente do Colecionador trata `color_rarity` como critério de peso e, ao mesmo tempo, penaliza repintura não declarada. Sem o documento, a cor rara é só uma cor bonita."
+      ],
+      "key_facts": [
+        "Cores de baixo volume concentram prêmio no mercado atual",
+        "Original x repintado é a distinção que define o prêmio",
+        "Verificação: Kardex + leitura de espessura de pintura"
+      ],
+      "fact_check": ["Volumes por cor e magnitude do prêmio variam por fonte — tratar como tendência, não como número."],
+      "further_reading": ["hagerty", "classic_driver", "porsche_originale"],
+      "personas": ["colecionador"]
+    },
+
+    {
+      "id": "o-fim",
+      "kicker": "1998",
+      "title": "A inversão",
+      "standfirst": "Quando o 996 chegou, o 993 virou o carro velho. Levou cerca de uma década para virar o carro caro.",
+      "body": [
+        "Nenhum modelo é colecionável no dia em que sai de linha. O 993 passou anos sendo simplesmente o 911 anterior — depreciando como qualquer usado caro, comprado por quem queria muito carro por pouco dinheiro.",
+        "A virada veio quando ficou claro que a refrigeração a ar não voltaria. A partir daí, o mesmo carro que era um usado passou a ser o fim de uma linhagem, e a curva de preço inverteu com uma violência que pegou muita gente de surpresa — inclusive quem tinha vendido o seu.",
+        "Guardar esse episódio é útil por um motivo prático: ele é o argumento mais forte a favor de manutenção documentada. Os 993 que atravessaram a década barata sem histórico são exatamente os que hoje têm o maior desconto e o maior risco."
+      ],
+      "key_facts": [
+        "Substituído pelo 996 no fim dos anos 1990",
+        "Período de baixa antes da valorização",
+        "Carros sem histórico do período barato concentram risco"
+      ],
+      "fact_check": ["Datas de transição de linha e o timing da inflexão de preço variam por mercado — confirmar antes de citar ano específico."],
+      "further_reading": ["hagerty", "magneto", "classic_driver"],
+      "personas": ["colecionador", "piloto"]
+    }
+  ]
+}

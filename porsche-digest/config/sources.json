@@ -1,0 +1,767 @@
+{
+  "$schema_version": "6.0",
+  "description": "Registro de fontes do Porsche Digest. 'ingest.method' e HIPOTESE ate 'ingest.verified' virar true. Rode `node tools/probe-sources.mjs` numa maquina com rede. Cada fonte pode listar varias URLs em 'candidate_urls' — o probe tenta em ordem e para na primeira que devolver um feed com itens.",
+  "ingest_methods": {
+    "rss": "Feed XML publico. Barato, estavel, preferido.",
+    "json_api": "Endpoint JSON publico ou semi-publico.",
+    "scrape": "HTML parsing. Fragil — quebra quando o site muda. Exige seletor versionado.",
+    "manual": "Sem automacao viavel (login, JS pesado, ToS restritivo). Entra por curadoria via Telegram.",
+    "unknown": "Ainda nao investigado."
+  },
+  "legal_note": "Antes de habilitar 'scrape' em qualquer fonte, checar robots.txt e Termos de Uso do site. Bring a Trailer e Classic.com em particular restringem uso automatizado. Preferir sempre rss/json_api; quando so houver scrape, respeitar rate limit de 1 req/min e identificar o User-Agent.",
+  "dedup": {
+    "problem": "Classic.com e um AGREGADOR: o mesmo carro aparece nele e na plataforma de origem, gerando duplicata na tabela de Market.",
+    "strategy": [
+      "1. Chave forte: VIN normalizado (upper, sem espacos). Se presente em ambos, e o mesmo carro.",
+      "2. Chave media: (ano, modelo, cor_exterior, km +/- 2%) + preco +/- 5%.",
+      "3. Chave fraca: similaridade de titulo > 0.85 (Dice bigram) + mesma janela de 30 dias.",
+      "4. Ao fundir, manter o registro da PLATAFORMA DE ORIGEM e guardar o agregador em 'also_listed_on[]'."
+    ],
+    "aggregators": [
+      "classic_com",
+      "hemmings"
+    ]
+  },
+  "vin_filter": {
+    "note": "Filtro alvo do digest: 993 Carrera 4S, model years 1996-1998.",
+    "model_year_code": {
+      "position": "10o digito do VIN",
+      "T": 1996,
+      "V": 1997,
+      "W": 1998
+    },
+    "caution": "Nem toda fonte expoe VIN. Quando ausente, cair para o filtro textual abaixo."
+  },
+  "text_filter": {
+    "must_match_any": [
+      "993",
+      "Carrera 4S",
+      "C4S",
+      "Carrera 4 S"
+    ],
+    "must_match_year": [
+      "1996",
+      "1997",
+      "1998"
+    ],
+    "exclude": [
+      "964",
+      "996",
+      "997",
+      "991",
+      "992",
+      "Turbo S 993 replica",
+      "kit car",
+      "replica"
+    ],
+    "adjacent_allow": {
+      "note": "Itens 993 nao-4S entram apenas na secao de contexto de mercado, nunca no ranking principal.",
+      "terms": [
+        "993 Turbo",
+        "993 Carrera S",
+        "993 Carrera 2",
+        "993 Carrera 4",
+        "993 GT2",
+        "993 RS"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "porsche_newsroom",
+      "name": "Porsche Newsroom",
+      "url": "https://newsroom.porsche.com",
+      "region": "global",
+      "type": "news",
+      "section": [
+        "newsroom"
+      ],
+      "ingest": {
+        "method": "scrape",
+        "candidate_url": "https://newsroom.porsche.com/en.rss",
+        "verified": true,
+        "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
+        "probed_at": "2026-08-17T10:20:03.807Z",
+        "probe_url": "https://newsroom.porsche.com/en.rss",
+        "candidate_urls": [
+          "https://newsroom.porsche.com/en.rss",
+          "https://newsroom.porsche.com/en/feed.xml",
+          "https://newsroom.porsche.com/feed",
+          "https://newsroom.porsche.com/rss"
+        ],
+        "probe_attempts": [
+          {
+            "url": "https://newsroom.porsche.com/en.rss",
+            "status": 200
+          },
+          {
+            "url": "https://newsroom.porsche.com/en/feed.xml",
+            "status": 404
+          },
+          {
+            "url": "https://newsroom.porsche.com/feed",
+            "status": 404
+          },
+          {
+            "url": "https://newsroom.porsche.com/rss",
+            "status": 404
+          }
+        ],
+        "covers_model": null
+      }
+    },
+    {
+      "id": "porsche_classic_partners",
+      "name": "Porsche Classic Partners",
+      "url": "https://www.porsche.com/usa/accessoriesandservice/classic/classic-partner/",
+      "region": "usa",
+      "type": "dealer_network",
+      "section": [
+        "market",
+        "parts"
+      ],
+      "ingest": {
+        "method": "manual",
+        "verified": false,
+        "reason": "Diretorio de parceiros, nao listagem de estoque."
+      }
+    },
+    {
+      "id": "bring_a_trailer",
+      "name": "Bring a Trailer",
+      "url": "https://bringatrailer.com",
+      "region": "usa",
+      "type": "auction",
+      "section": [
+        "market",
+        "sold"
+      ],
+      "priority": 1,
+      "ingest": {
+        "method": "rss",
+        "candidate_url": "https://bringatrailer.com/porsche/993/feed/",
+        "verified": true,
+        "reason": "feed com 20 itens, SEM mencao a 993 — checar se cobre o modelo",
+        "probed_at": "2026-08-17T10:20:11.323Z",
+        "probe_url": "https://bringatrailer.com/feed/",
+        "candidate_urls": [
+          "https://bringatrailer.com/porsche/993/feed/",
+          "https://bringatrailer.com/porsche/993-carrera-4s/feed/",
+          "https://bringatrailer.com/porsche/feed/",
+          "https://bringatrailer.com/feed/"
+        ],
+        "probe_attempts": [
+          {
+            "url": "https://bringatrailer.com/porsche/993/feed/",
+            "status": 200,
+            "items": 0
+          },
+          {
+            "url": "https://bringatrailer.com/porsche/993-carrera-4s/feed/",
+            "status": 200,
+            "items": 0
+          },
+          {
+            "url": "https://bringatrailer.com/porsche/feed/",
+            "status": 200,
+            "items": 0
+          },
+          {
+            "url": "https://bringatrailer.com/feed/",
+            "status": 200,
+            "items": 20
+          }
+        ],
+        "covers_model": false
+      },
+      "capture_comments": true,
+      "notes": "Fonte primaria de precos REALIZADOS. Os comentarios sao sinal de qualidade (repintura, painel trocado) — capturar comentarios marcados por especialistas.",
+      "coverage_note": "Os feeds por modelo (/porsche/993/feed/, /porsche/993-carrera-4s/feed/, /porsche/feed/) respondem 200 com ZERO itens — o padrao de taxonomia nao gera feed. So o feed geral do site (/feed/) traz conteudo: 20 leiloes mais recentes de TODAS as marcas, sem nenhum 993 na janela testada em 2026-08-16. Consequencia pratica: formato ok, cobertura nao. Um 993 C4S aparece poucas vezes por mes no BaT; uma janela rolante de 20 itens perde quase todos, a menos que o coletor rode com frequencia alta e mantenha estado do que ja viu. Decidir se vale, ou se BaT entra por curadoria manual."
+    },
+    {
+      "id": "pcarmarket",
+      "name": "PCARMARKET",
+      "url": "https://www.pcarmarket.com",
+      "region": "usa",
+      "type": "auction",
+      "section": [
+        "market",
+        "sold"
+      ],
+      "priority": 2,
+      "ingest": {
+        "method": "scrape",
+        "verified": true,
+        "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
+        "probed_at": "2026-08-17T10:20:14.302Z",
+        "probe_url": "https://www.pcarmarket.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.pcarmarket.com",
+            "status": 200
+          }
+        ],
+        "covers_model": null
+      }
+    },
+    {
+      "id": "pca_mart",
+      "name": "PCA Mart",
+      "url": "https://mart.pca.org",
+      "region": "usa",
+      "type": "classifieds",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "scrape",
+        "verified": true,
+        "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
+        "probed_at": "2026-08-17T10:20:16.496Z",
+        "probe_url": "https://mart.pca.org",
+        "probe_attempts": [
+          {
+            "url": "https://mart.pca.org",
+            "status": 200
+          }
+        ],
+        "covers_model": null
+      }
+    },
+    {
+      "id": "classic_com",
+      "name": "CLASSIC.COM",
+      "url": "https://www.classic.com",
+      "region": "global",
+      "type": "aggregator",
+      "section": [
+        "market",
+        "valuation"
+      ],
+      "priority": 1,
+      "is_aggregator": true,
+      "ingest": {
+        "method": "manual",
+        "verified": true,
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
+        "probed_at": "2026-08-16T23:57:26.553Z",
+        "probe_url": "https://www.classic.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.classic.com",
+            "status": 403
+          }
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
+      },
+      "notes": "Melhor fonte de INDICE/valuation historico. Como listagem, gera duplicata — ver dedup.aggregators."
+    },
+    {
+      "id": "hemmings",
+      "name": "Hemmings",
+      "url": "https://www.hemmings.com",
+      "region": "usa",
+      "type": "aggregator",
+      "section": [
+        "market"
+      ],
+      "is_aggregator": true,
+      "ingest": {
+        "method": "manual",
+        "candidate_url": "https://www.hemmings.com/blog/feed/",
+        "verified": true,
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
+        "probed_at": "2026-08-16T23:57:28.211Z",
+        "probe_url": "https://www.hemmings.com/blog/feed/",
+        "probe_attempts": [
+          {
+            "url": "https://www.hemmings.com/blog/feed/",
+            "status": 403
+          }
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
+      }
+    },
+    {
+      "id": "collecting_cars",
+      "name": "Collecting Cars",
+      "url": "https://collectingcars.com",
+      "region": "global",
+      "type": "auction",
+      "section": [
+        "market",
+        "sold"
+      ],
+      "priority": 2,
+      "ingest": {
+        "method": "manual",
+        "verified": true,
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
+        "probed_at": "2026-08-16T23:57:29.790Z",
+        "probe_url": "https://collectingcars.com",
+        "probe_attempts": [
+          {
+            "url": "https://collectingcars.com",
+            "status": 403
+          }
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
+      },
+      "notes": "Briefing listava 'Collecting Cars USA' e 'Collecting Cars' como fontes separadas — e o mesmo dominio. Unificado aqui com cobertura global."
+    },
+    {
+      "id": "sloan_motor_cars",
+      "name": "Sloan Motor Cars",
+      "url": "https://www.sloanmotorcars.com",
+      "region": "usa",
+      "type": "dealer",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "unknown",
+        "verified": true,
+        "reason": "feed respondeu XML mas com ZERO itens — candidate_url provavelmente errada; tentar outro caminho",
+        "probed_at": "2026-08-17T10:20:22.535Z",
+        "probe_url": "https://www.sloanmotorcars.com/feed/",
+        "probe_attempts": [
+          {
+            "url": "https://www.sloanmotorcars.com",
+            "status": 200
+          },
+          {
+            "url": "https://www.sloanmotorcars.com/feed/",
+            "status": 200,
+            "items": 0
+          },
+          {
+            "url": "https://www.sloanmotorcars.com/comments/feed/",
+            "status": 200,
+            "items": 0
+          }
+        ],
+        "covers_model": null
+      }
+    },
+    {
+      "id": "canepa",
+      "name": "Canepa",
+      "url": "https://www.canepa.com",
+      "region": "usa",
+      "type": "dealer",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "manual",
+        "verified": true,
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
+        "probed_at": "2026-08-16T23:57:33.931Z",
+        "probe_url": "https://www.canepa.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.canepa.com",
+            "status": 403
+          }
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
+      },
+      "notes": "Estoque pequeno e caro — alta relevancia para a lente Colecionador."
+    },
+    {
+      "id": "european_collectibles",
+      "name": "European Collectibles",
+      "url": "https://www.europeancollectibles.com",
+      "region": "usa",
+      "type": "dealer",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "scrape",
+        "verified": true,
+        "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
+        "probed_at": "2026-08-17T10:20:24.591Z",
+        "probe_url": "https://www.europeancollectibles.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.europeancollectibles.com",
+            "status": 200
+          }
+        ],
+        "covers_model": null
+      }
+    },
+    {
+      "id": "elferspot",
+      "name": "Elferspot",
+      "url": "https://www.elferspot.com",
+      "region": "europe",
+      "type": "marketplace",
+      "section": [
+        "market"
+      ],
+      "priority": 1,
+      "ingest": {
+        "method": "rss",
+        "candidate_url": "https://www.elferspot.com/en/feed/",
+        "verified": true,
+        "reason": "feed com 10 itens, menciona 993",
+        "probed_at": "2026-08-17T10:20:28.205Z",
+        "probe_url": "https://www.elferspot.com/en/feed/",
+        "probe_attempts": [
+          {
+            "url": "https://www.elferspot.com/en/feed/",
+            "status": 200,
+            "items": 10
+          }
+        ],
+        "covers_model": true
+      },
+      "notes": "Especialista 911. Melhor cobertura europeia para 993."
+    },
+    {
+      "id": "mobile_de",
+      "name": "Mobile.de",
+      "url": "https://www.mobile.de",
+      "region": "europe",
+      "type": "marketplace",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "manual",
+        "verified": false,
+        "reason": "API oficial exige credencial comercial; scraping vetado por ToS."
+      }
+    },
+    {
+      "id": "autoscout24",
+      "name": "AutoScout24",
+      "url": "https://www.autoscout24.com",
+      "region": "europe",
+      "type": "marketplace",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "manual",
+        "verified": false,
+        "reason": "Mesma restricao do Mobile.de."
+      }
+    },
+    {
+      "id": "classic_driver",
+      "name": "Classic Driver",
+      "url": "https://www.classicdriver.com",
+      "region": "europe",
+      "type": "marketplace",
+      "section": [
+        "market",
+        "design"
+      ],
+      "ingest": {
+        "method": "rss",
+        "candidate_url": "https://www.classicdriver.com/en/rss.xml",
+        "verified": true,
+        "reason": "feed com 10 itens, menciona 993",
+        "probed_at": "2026-08-17T10:20:30.204Z",
+        "probe_url": "https://www.classicdriver.com/en/rss.xml",
+        "probe_attempts": [
+          {
+            "url": "https://www.classicdriver.com/en/rss.xml",
+            "status": 200,
+            "items": 10
+          }
+        ],
+        "covers_model": true
+      },
+      "notes": "Tambem e fonte editorial forte para a secao de referencias de design."
+    },
+    {
+      "id": "early911s",
+      "name": "Early 911S",
+      "url": "https://early911s.de",
+      "region": "germany",
+      "type": "dealer",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "scrape",
+        "verified": true,
+        "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
+        "probed_at": "2026-08-17T10:20:32.432Z",
+        "probe_url": "https://early911s.de",
+        "probe_attempts": [
+          {
+            "url": "https://early911s.de",
+            "status": 200
+          }
+        ],
+        "covers_model": null
+      }
+    },
+    {
+      "id": "schaltkulisse",
+      "name": "Schaltkulisse",
+      "url": "https://schaltkulisse.com",
+      "region": "germany",
+      "type": "dealer",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "unknown",
+        "verified": true,
+        "reason": "feed respondeu XML mas com ZERO itens — candidate_url provavelmente errada; tentar outro caminho",
+        "probed_at": "2026-08-17T10:20:40.446Z",
+        "probe_url": "https://schaltkulisse.com/en/feed/",
+        "probe_attempts": [
+          {
+            "url": "https://schaltkulisse.com",
+            "status": 200
+          },
+          {
+            "url": "https://schaltkulisse.com/en/feed/",
+            "status": 200,
+            "items": 0
+          },
+          {
+            "url": "https://schaltkulisse.com/en/comments/feed/",
+            "status": 200,
+            "items": 0
+          }
+        ],
+        "covers_model": null
+      },
+      "notes": "Curadoria forte — relevante para a lente Construtor."
+    },
+    {
+      "id": "paul_stephens",
+      "name": "Paul Stephens",
+      "url": "https://www.paul-stephens.com",
+      "region": "uk",
+      "type": "dealer",
+      "section": [
+        "market",
+        "tuning"
+      ],
+      "ingest": {
+        "method": "rss",
+        "verified": true,
+        "reason": "feed com 10 itens, menciona 993",
+        "probed_at": "2026-08-17T10:20:46.460Z",
+        "probe_url": "https://www.paul-stephens.com/feed/",
+        "probe_attempts": [
+          {
+            "url": "https://www.paul-stephens.com",
+            "status": 200
+          },
+          {
+            "url": "https://www.paul-stephens.com/feed/",
+            "status": 200,
+            "items": 10
+          }
+        ],
+        "covers_model": true
+      },
+      "notes": "Autoart = builds proprios. Relevante para Construtor e Piloto."
+    },
+    {
+      "id": "autofarm",
+      "name": "Autofarm",
+      "url": "https://autofarm.co.uk",
+      "region": "uk",
+      "type": "specialist",
+      "section": [
+        "market",
+        "maintenance"
+      ],
+      "ingest": {
+        "method": "rss",
+        "verified": true,
+        "reason": "feed com 10 itens, SEM mencao a 993 — checar se cobre o modelo",
+        "probed_at": "2026-08-17T10:20:53.404Z",
+        "probe_url": "https://autofarm.co.uk/feed/",
+        "probe_attempts": [
+          {
+            "url": "https://autofarm.co.uk",
+            "status": 200
+          },
+          {
+            "url": "https://autofarm.co.uk/feed/",
+            "status": 200,
+            "items": 10
+          }
+        ],
+        "covers_model": false
+      },
+      "notes": "Especialista tecnico — fonte de conteudo de manutencao, nao so de estoque."
+    },
+    {
+      "id": "export56",
+      "name": "Export 56",
+      "url": "https://www.export56.com",
+      "region": "uk",
+      "type": "dealer",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "rss",
+        "verified": true,
+        "reason": "feed com 12 itens, SEM mencao a 993 — checar se cobre o modelo",
+        "probed_at": "2026-08-17T10:20:57.981Z",
+        "probe_url": "https://www.export56.com/feed/",
+        "probe_attempts": [
+          {
+            "url": "https://www.export56.com",
+            "status": 200
+          },
+          {
+            "url": "https://www.export56.com/feed/",
+            "status": 200,
+            "items": 12
+          }
+        ],
+        "covers_model": false
+      }
+    },
+    {
+      "id": "hexagon_classics",
+      "name": "Hexagon Classics",
+      "url": "https://www.hexagonclassics.com",
+      "region": "uk",
+      "type": "dealer",
+      "section": [
+        "market"
+      ],
+      "ingest": {
+        "method": "scrape",
+        "verified": true,
+        "reason": "respondeu HTML (text/html) — exige parser e checagem de robots.txt/ToS",
+        "probed_at": "2026-08-17T10:21:00.498Z",
+        "probe_url": "https://www.hexagonclassics.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.hexagonclassics.com",
+            "status": 200
+          }
+        ],
+        "covers_model": null
+      }
+    },
+    {
+      "id": "suncoast",
+      "name": "Suncoast Parts",
+      "url": "https://www.suncoastparts.com",
+      "region": "usa",
+      "type": "parts",
+      "section": [
+        "parts"
+      ],
+      "ingest": {
+        "method": "manual",
+        "verified": true,
+        "reason": "HTTP 403 ao acesso automatizado (Cloudflare Challenge). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
+        "probed_at": "2026-08-16T23:58:00.098Z",
+        "probe_url": "https://www.suncoastparts.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.suncoastparts.com",
+            "status": 403
+          }
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
+      }
+    },
+    {
+      "id": "fcp_euro",
+      "name": "FCP Euro",
+      "url": "https://www.fcpeuro.com",
+      "region": "usa",
+      "type": "parts",
+      "section": [
+        "parts"
+      ],
+      "ingest": {
+        "method": "manual",
+        "verified": true,
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
+        "probed_at": "2026-08-16T23:58:01.678Z",
+        "probe_url": "https://www.fcpeuro.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.fcpeuro.com",
+            "status": 403
+          }
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
+      },
+      "notes": "Garantia vitalicia em consumiveis — argumento forte para a lente Piloto."
+    },
+    {
+      "id": "pelican_parts",
+      "name": "Pelican Parts",
+      "url": "https://www.pelicanparts.com",
+      "region": "usa",
+      "type": "parts",
+      "section": [
+        "parts",
+        "maintenance"
+      ],
+      "ingest": {
+        "method": "manual",
+        "verified": true,
+        "reason": "HTTP 403 ao acesso automatizado (sem resposta). Investigacao manual em 2026-08-17 nao encontrou feed RSS nem API oficial documentada. Classificada como manual: entra por curadoria via Telegram.",
+        "probed_at": "2026-08-16T23:58:03.240Z",
+        "probe_url": "https://www.pelicanparts.com",
+        "probe_attempts": [
+          {
+            "url": "https://www.pelicanparts.com",
+            "status": 403
+          }
+        ],
+        "official_feed_checked": true,
+        "investigated_at": "2026-08-17"
+      },
+      "notes": "Adicionado: os DIY articles sao a melhor base publica de manutencao 993."
+    },
+    {
+      "id": "exchange_rate",
+      "name": "Cotacao USD/BRL",
+      "url": "https://open.er-api.com/v6/latest/USD",
+      "region": "global",
+      "type": "utility",
+      "section": [
+        "global"
+      ],
+      "ingest": {
+        "method": "json_api",
+        "verified": true,
+        "reason": "respondeu JSON",
+        "probed_at": "2026-08-17T10:21:02.073Z",
+        "probe_url": "https://open.er-api.com/v6/latest/USD",
+        "probe_attempts": [
+          {
+            "url": "https://open.er-api.com/v6/latest/USD",
+            "status": 200
+          }
+        ],
+        "covers_model": null
+      },
+      "fallback_rate": 5.11,
+      "notes": "Se a chamada falhar, usar fallback e MARCAR no rodape que a cotacao esta defasada, com a data da ultima cotacao boa."
+    }
+  ],
+  "probed_at": "2026-08-17T10:21:03.585Z",
+  "candidate_note": "Um feed que responde XML mas traz ZERO itens NAO conta como fonte utilizavel: quase sempre significa caminho errado. Por isso as fontes cujo feed veio vazio ganharam candidatas alternativas. O probe tambem faz AUTODESCOBERTA: quando uma candidata devolve HTML, ele le <link rel='alternate' type='application/rss+xml'> da propria pagina e segue o feed declarado, em vez de adivinhar caminhos.",
+  "blocked_policy": "As 7 fontes que devolveram 403 foram investigadas manualmente (rodape, /api, /developers, tag link rel=alternate) e nenhuma publica feed ou API oficial. Ficam como 'manual' — o que tambem faz o probe parar de bate-las a cada rodada. Nao mascarar User-Agent para contornar: e controle de acesso deliberado, e sao sites com quem pode haver relacao comercial depois. Revisitar se alguma passar a publicar API."
+}
